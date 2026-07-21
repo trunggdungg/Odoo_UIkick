@@ -5,7 +5,8 @@
     <!-- HOME PAGE (danh sách project + sidebar filter)                -->
     <!-- ============================================================ -->
     <template id="home_page" name="UIKick - Discover">
-        <t t-call="web.frontend_layout">
+        <t t-call="web.layout">
+            <t t-set="title"><t t-esc="active_category"/> Projects — Kickstarter</t>
             <div id="wrap" class="uikick">
 
                 <!-- Top nav -->
@@ -219,7 +220,8 @@
     <!-- DETAIL PAGE (chi tiết chiến dịch)                             -->
     <!-- ============================================================ -->
     <template id="detail_page" name="UIKick - Campaign Detail">
-        <t t-call="web.frontend_layout">
+        <t t-call="web.layout">
+            <t t-set="title"><t t-esc="project.title"/> — Kickstarter</t>
             <div id="wrap" class="uikick uikick-detail">
 
                 <header class="uikick-detail-header">
