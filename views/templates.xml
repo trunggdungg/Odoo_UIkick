@@ -287,6 +287,36 @@
                     </div>
                 </div>
 
+                <!-- Hero media (sits above the trust banner, matching real Kickstarter campaign pages) -->
+                <div class="uikick-hero-media">
+                    <div class="uikick-container">
+                        <div class="uikick-hero-video" id="uikick-hero-video">
+                            <video t-att-src="project.video_url" muted="muted" loop="loop" playsinline="playsinline"
+                                   class="uikick-hero-video-el"/>
+                            <div class="uikick-hero-play-overlay">
+                                <div class="uikick-hero-play-circle">
+                                    <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </div>
+                            <div class="uikick-hero-pause-overlay">
+                                <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                            </div>
+                            <div class="uikick-hero-text-overlay">
+                                <t t-if="project.campaign_number">
+                                    <div class="uikick-hero-campaign-num">
+                                        OUR <t t-esc="'%sTH' % project.campaign_number"/><br/>CAMPAIGN.
+                                    </div>
+                                </t>
+                                <t t-if="project.total_raised">
+                                    <div class="uikick-hero-total">
+                                        <t t-esc="project.total_raised"/> raised &amp; <t t-esc="project.total_backers"/> backers.
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Platform info banner -->
                 <div class="uikick-info-banner">
                     <div class="uikick-container uikick-info-grid">
@@ -355,31 +385,6 @@
                         <main class="uikick-detail-main">
                             <div class="uikick-tab-content active" data-tab="Campaign">
                                 <h2 class="uikick-section-title">Story</h2>
-
-                                <div class="uikick-hero-video" id="uikick-hero-video">
-                                    <video t-att-src="project.video_url" muted="muted" loop="loop" playsinline="playsinline"
-                                           class="uikick-hero-video-el"/>
-                                    <div class="uikick-hero-play-overlay">
-                                        <div class="uikick-hero-play-circle">
-                                            <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                                        </div>
-                                    </div>
-                                    <div class="uikick-hero-pause-overlay">
-                                        <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-                                    </div>
-                                    <div class="uikick-hero-text-overlay">
-                                        <t t-if="project.campaign_number">
-                                            <div class="uikick-hero-campaign-num">
-                                                OUR <t t-esc="'%sTH' % project.campaign_number"/><br/>CAMPAIGN.
-                                            </div>
-                                        </t>
-                                        <t t-if="project.total_raised">
-                                            <div class="uikick-hero-total">
-                                                <t t-esc="project.total_raised"/> raised &amp; <t t-esc="project.total_backers"/> backers.
-                                            </div>
-                                        </t>
-                                    </div>
-                                </div>
 
                                 <div class="uikick-story-text">
                                     <p>

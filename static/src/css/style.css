@@ -133,6 +133,9 @@
 .uikick-stat-divider { width: 1px; height: 32px; background: #e5e7eb; }
 .uikick-hero-actions { display: flex; align-items: center; gap: 12px; margin-left: 16px; }
 
+.uikick-hero-media { padding: 24px 40px 0; }
+.uikick-hero-media .uikick-hero-video { margin-bottom: 24px; }
+
 .uikick-info-banner { background: #f9fafb; border-bottom: 1px solid #e5e7eb; padding: 16px 40px; }
 .uikick-info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
 .uikick-info-item { display: flex; align-items: flex-start; gap: 12px; }
