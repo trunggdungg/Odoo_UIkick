@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!-- uikick.project backend views                                  -->
+    <!-- ============================================================ -->
+    <record id="view_uikick_project_list" model="ir.ui.view">
+        <field name="name">uikick.project.list</field>
+        <field name="model">uikick.project</field>
+        <field name="arch" type="xml">
+            <list string="UIKick Projects">
+                <field name="sequence" widget="handle"/>
+                <field name="project_code"/>
+                <field name="title"/>
+                <field name="category"/>
+                <field name="status"/>
+                <field name="amount_raised"/>
+                <field name="goal"/>
+                <field name="backers"/>
+                <field name="percent_funded"/>
+                <field name="active" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_uikick_project_form" model="ir.ui.view">
+        <field name="name">uikick.project.form</field>
+        <field name="model">uikick.project</field>
+        <field name="arch" type="xml">
+            <form string="UIKick Project">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="title"/>
+                        <h1><field name="title" placeholder="Project title"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_code"/>
+                            <field name="creator"/>
+                            <field name="category"/>
+                            <field name="location"/>
+                            <field name="status"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="goal"/>
+                            <field name="amount_raised"/>
+                            <field name="percent_funded"/>
+                            <field name="backers"/>
+                            <field name="days_left"/>
+                            <field name="sequence"/>
+                        </group>
+                    </group>
+                    <group string="Media">
+                        <field name="image"/>
+                        <field name="video_url"/>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                    <group string="All-time campaign stats (optional)">
+                        <field name="campaign_number"/>
+                        <field name="total_raised"/>
+                        <field name="total_backers"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_uikick_project" model="ir.actions.act_window">
+        <field name="name">Projects</field>
+        <field name="res_model">uikick.project</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- uikick.reward.tier backend views                              -->
+    <!-- ============================================================ -->
+    <record id="view_uikick_reward_tier_list" model="ir.ui.view">
+        <field name="name">uikick.reward.tier.list</field>
+        <field name="model">uikick.reward.tier</field>
+        <field name="arch" type="xml">
+            <list string="UIKick Reward Tiers">
+                <field name="sequence" widget="handle"/>
+                <field name="title"/>
+                <field name="amount"/>
+                <field name="estimated"/>
+                <field name="backers"/>
+                <field name="limited"/>
+                <field name="remaining"/>
+                <field name="active" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_uikick_reward_tier_form" model="ir.ui.view">
+        <field name="name">uikick.reward.tier.form</field>
+        <field name="model">uikick.reward.tier</field>
+        <field name="arch" type="xml">
+            <form string="UIKick Reward Tier">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="title"/>
+                        <h1><field name="title" placeholder="Reward title"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="amount"/>
+                            <field name="estimated"/>
+                            <field name="backers"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="limited"/>
+                            <field name="remaining" invisible="not limited"/>
+                            <field name="sequence"/>
+                        </group>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_uikick_reward_tier" model="ir.actions.act_window">
+        <field name="name">Reward Tiers</field>
+        <field name="res_model">uikick.reward.tier</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Menu                                                          -->
+    <!-- ============================================================ -->
+    <menuitem id="menu_uikick_root" name="UIKick" sequence="100"/>
+    <menuitem id="menu_uikick_projects" name="Projects" parent="menu_uikick_root"
+              action="action_uikick_project" sequence="10"/>
+    <menuitem id="menu_uikick_reward_tiers" name="Reward Tiers" parent="menu_uikick_root"
+              action="action_uikick_reward_tier" sequence="20"/>
+
+</odoo>

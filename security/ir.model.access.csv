@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_uikick_project_user,uikick.project.user,model_uikick_project,base.group_user,1,0,0,0
+access_uikick_project_manager,uikick.project.manager,model_uikick_project,base.group_system,1,1,1,1
+access_uikick_reward_tier_user,uikick.reward.tier.user,model_uikick_reward_tier,base.group_user,1,0,0,0
+access_uikick_reward_tier_manager,uikick.reward.tier.manager,model_uikick_reward_tier,base.group_system,1,1,1,1
