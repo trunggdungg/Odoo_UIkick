@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!-- HOME PAGE (danh sách project + sidebar filter)                -->
+    <!-- ============================================================ -->
+    <template id="home_page" name="UIKick - Discover">
+        <t t-call="web.frontend_layout">
+            <div id="wrap" class="uikick">
+
+                <!-- Top nav -->
+                <header class="uikick-header">
+                    <div class="uikick-header-top">
+                        <div class="uikick-header-left">
+                            <a href="/uikick" class="uikick-logo">
+                                <svg width="20" height="20" viewBox="0 0 40 40" fill="none">
+                                    <path d="M20 0C8.954 0 0 8.954 0 20s8.954 20 20 20 20-8.954 20-20S31.046 0 20 0z" fill="#05ce78"/>
+                                    <path d="M13 10h5v8.5l7-8.5h6l-8 9.5L33 30h-6.5l-7.5-9V30H13V10z" fill="white"/>
+                                </svg>
+                                <span>Kickstarter</span>
+                            </a>
+                            <nav class="uikick-main-nav">
+                                <a href="#">Discover</a>
+                                <a href="#">Our Story</a>
+                                <a href="#">Start a project</a>
+                            </nav>
+                        </div>
+                        <div class="uikick-header-right">
+                            <button class="uikick-btn-link">Log in</button>
+                            <button class="uikick-btn-primary">Sign up</button>
+                        </div>
+                    </div>
+
+                    <!-- Category nav -->
+                    <div class="uikick-category-nav">
+                        <nav>
+                            <t t-foreach="categories" t-as="cat">
+                                <a t-attr-href="'/uikick/category/%s' % cat"
+                                   t-attr-class="'uikick-cat-link active' if cat == active_category else 'uikick-cat-link'">
+                                    <t t-esc="cat"/>
+                                </a>
+                            </t>
+                        </nav>
+                    </div>
+                </header>
+
+                <div class="uikick-body">
+                    <!-- Sidebar filters -->
+                    <aside class="uikick-sidebar">
+                        <p class="uikick-sidebar-title">Filter by</p>
+
+                        <div class="uikick-filter-group">
+                            <h3>Project status</h3>
+                            <label class="uikick-check-row">
+                                <span><input type="checkbox" id="filter-upcoming"/> Upcoming</span>
+                                <span class="uikick-count">10,285</span>
+                            </label>
+                            <label class="uikick-check-row">
+                                <span><input type="checkbox" id="filter-live" checked="checked"/> Live</span>
+                                <span class="uikick-count">2,933</span>
+                            </label>
+                            <label class="uikick-check-row">
+                                <span><input type="checkbox" id="filter-late"/> Late pledge</span>
+                                <span class="uikick-count">4,731</span>
+                            </label>
+                            <label class="uikick-check-row uikick-check-row-single">
+                                <input type="checkbox" id="filter-ended"/> Include ended projects
+                            </label>
+                        </div>
+
+                        <hr/>
+
+                        <div class="uikick-filter-group">
+                            <h3>Location</h3>
+                            <input type="text" placeholder="Search by city, state, country..." class="uikick-input"/>
+                            <select class="uikick-select">
+                                <option>Anywhere</option>
+                                <option>Vietnam</option>
+                                <option>Hanoi, Viet Nam</option>
+                                <option>United States</option>
+                                <option>United Kingdom</option>
+                                <option>Canada</option>
+                            </select>
+                        </div>
+
+                        <hr/>
+
+                        <div class="uikick-filter-group">
+                            <h3>Goal</h3>
+                            <label class="uikick-radio-row">
+                                <input type="radio" name="goal"/> Under $1,000
+                            </label>
+                            <label class="uikick-radio-row">
+                                <input type="radio" name="goal"/> $1,000 to $10,000
+                            </label>
+                            <label class="uikick-radio-row">
+                                <input type="radio" name="goal"/> $10,000 to $100,000
+                            </label>
+                        </div>
+
+                        <hr/>
+
+                        <div class="uikick-filter-group">
+                            <h3>Amount raised</h3>
+                            <div class="uikick-amount-row">
+                                <div class="uikick-amount-field">
+                                    <span>$</span>
+                                    <input type="number" placeholder="Min"/>
+                                </div>
+                                <div class="uikick-amount-field">
+                                    <span>$</span>
+                                    <input type="number" placeholder="Max"/>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <!-- Main content -->
+                    <main class="uikick-main">
+                        <div class="uikick-main-header">
+                            <div>
+                                <h1><t t-esc="active_category"/></h1>
+                                <p><t t-esc="len(projects)"/> projects</p>
+                            </div>
+                            <div class="uikick-sort">
+                                <span>Sort by</span>
+                                <select class="uikick-select">
+                                    <option>Relevance</option>
+                                    <option>Most funded</option>
+                                    <option>Most backed</option>
+                                    <option>Newest</option>
+                                    <option>End date</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="uikick-grid">
+                            <t t-foreach="projects" t-as="project">
+                                <a t-attr-href="'/uikick/project/%s' % project['id']" class="uikick-card">
+                                    <div class="uikick-card-media">
+                                        <img t-att-src="project['image']" t-att-alt="project['title']"
+                                             class="uikick-card-img"/>
+                                        <video t-att-src="project['video_url']" muted="muted" loop="loop"
+                                               playsinline="playsinline" preload="metadata"
+                                               class="uikick-card-video"/>
+                                        <t t-if="project['status'] == 'upcoming'">
+                                            <span class="uikick-badge">Upcoming</span>
+                                        </t>
+                                    </div>
+                                    <div class="uikick-card-body">
+                                        <p class="uikick-card-category"><t t-esc="project['category']"/></p>
+                                        <h3 class="uikick-card-title"><t t-esc="project['title']"/></h3>
+                                        <p class="uikick-card-creator">by <span><t t-esc="project['creator']"/></span></p>
+
+                                        <div class="uikick-progress">
+                                            <div class="uikick-progress-track">
+                                                <div class="uikick-progress-fill"
+                                                     t-attr-style="'width:%s%%' % min(project['percent_funded'], 100)"/>
+                                            </div>
+                                            <div class="uikick-progress-meta">
+                                                <span class="uikick-progress-pct">
+                                                    <t t-if="project['percent_funded'] &gt;= 100">
+                                                        <t t-esc="project['percent_funded']"/>% funded
+                                                    </t>
+                                                    <t t-else="">
+                                                        <t t-esc="project['percent_funded']"/>% of goal
+                                                    </t>
+                                                </span>
+                                                <span class="uikick-progress-days">
+                                                    <t t-if="project['days_left'] &gt; 0">
+                                                        <t t-esc="project['days_left']"/> days left
+                                                    </t>
+                                                    <t t-else="">Ended</t>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="uikick-card-location">
+                                            <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                      d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"/>
+                                            </svg>
+                                            <span><t t-esc="project['location']"/></span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </t>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </t>
+    </template>
+
+
+    <!-- ============================================================ -->
+    <!-- DETAIL PAGE (chi tiết chiến dịch)                             -->
+    <!-- ============================================================ -->
+    <template id="detail_page" name="UIKick - Campaign Detail">
+        <t t-call="web.frontend_layout">
+            <div id="wrap" class="uikick uikick-detail">
+
+                <header class="uikick-detail-header">
+                    <div class="uikick-header-left">
+                        <a href="/uikick" class="uikick-logo">
+                            <svg width="18" height="18" viewBox="0 0 40 40" fill="none">
+                                <path d="M20 0C8.954 0 0 8.954 0 20s8.954 20 20 20 20-8.954 20-20S31.046 0 20 0z" fill="#05ce78"/>
+                                <path d="M13 10h5v8.5l7-8.5h6l-8 9.5L33 30h-6.5l-7.5-9V30H13V10z" fill="white"/>
+                            </svg>
+                            <span>Kickstarter</span>
+                        </a>
+                        <span class="uikick-sep">›</span>
+                        <a href="#" class="uikick-crumb"><t t-esc="project['category']"/></a>
+                    </div>
+                    <div class="uikick-header-right">
+                        <span><t t-esc="project['location']"/></span>
+                        <button class="uikick-btn-outline">Log in</button>
+                        <button class="uikick-btn-primary">Sign up</button>
+                    </div>
+                </header>
+
+                <!-- Hero -->
+                <div class="uikick-detail-hero">
+                    <div class="uikick-container">
+                        <h1><t t-esc="project['title']"/></h1>
+                        <p class="uikick-detail-desc"><t t-esc="project['description']"/></p>
+
+                        <div class="uikick-stats-row">
+                            <div class="uikick-stat">
+                                <div class="uikick-stat-value">US$<t t-esc="'{:,}'.format(project['amount_raised'])"/></div>
+                                <div class="uikick-stat-label">pledged of US$<t t-esc="'{:,}'.format(project['goal'])"/> goal</div>
+                            </div>
+                            <div class="uikick-stat-divider"/>
+                            <div class="uikick-stat">
+                                <div class="uikick-stat-value"><t t-esc="'{:,}'.format(project['backers'])"/></div>
+                                <div class="uikick-stat-label">backers</div>
+                            </div>
+                            <div class="uikick-stat-divider"/>
+                            <div class="uikick-stat">
+                                <div class="uikick-stat-value"><t t-esc="project['days_left']"/></div>
+                                <div class="uikick-stat-label">days to go</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uikick-container uikick-detail-body">
+                    <!-- Tabs -->
+                    <nav class="uikick-tabs" id="uikick-tabs">
+                        <t t-foreach="tabs" t-as="tab">
+                            <a href="#" t-att-data-tab="tab"
+                               t-attr-class="'uikick-tab active' if tab_index == 0 else 'uikick-tab'">
+                                <t t-esc="tab"/>
+                            </a>
+                        </t>
+                    </nav>
+
+                    <div class="uikick-detail-columns">
+                        <!-- Left: campaign content + TOC -->
+                        <div class="uikick-detail-main">
+                            <div class="uikick-toc">
+                                <h3>Table of contents</h3>
+                                <ul>
+                                    <t t-foreach="toc_items" t-as="item">
+                                        <li><a t-attr-href="'#toc-%s' % item_index"><t t-esc="item"/></a></li>
+                                    </t>
+                                </ul>
+                            </div>
+
+                            <div class="uikick-media-hero">
+                                <video t-att-src="project['video_url']" controls="controls"
+                                       class="uikick-media-hero-video"/>
+                            </div>
+
+                            <t t-foreach="toc_items" t-as="item">
+                                <section t-attr-id="'toc-%s' % item_index" class="uikick-content-section">
+                                    <h2><t t-esc="item"/></h2>
+                                    <p>Nội dung chi tiết cho mục "<t t-esc="item"/>" của chiến dịch sẽ được biên tập
+                                        tại đây — hình ảnh, mô tả kỹ thuật, thông số sản phẩm...</p>
+                                </section>
+                            </t>
+                        </div>
+
+                        <!-- Right: pledge box + reward tiers -->
+                        <aside class="uikick-detail-side">
+                            <div class="uikick-pledge-box">
+                                <div class="uikick-progress">
+                                    <div class="uikick-progress-track">
+                                        <div class="uikick-progress-fill"
+                                             t-attr-style="'width:%s%%' % min(project['percent_funded'], 100)"/>
+                                    </div>
+                                </div>
+                                <p class="uikick-pledge-pct"><t t-esc="project['percent_funded']"/>% funded</p>
+                                <div class="uikick-pledge-actions">
+                                    <button class="uikick-btn-primary uikick-btn-block">Back this project</button>
+                                    <button class="uikick-btn-outline uikick-btn-block">Remind me</button>
+                                </div>
+                            </div>
+
+                            <h3 class="uikick-rewards-title">Rewards</h3>
+                            <t t-foreach="reward_tiers" t-as="tier">
+                                <div class="uikick-reward-card">
+                                    <div class="uikick-reward-amount">US$<t t-esc="tier['amount']"/></div>
+                                    <div class="uikick-reward-title"><t t-esc="tier['title']"/></div>
+                                    <p class="uikick-reward-desc"><t t-esc="tier['description']"/></p>
+                                    <p class="uikick-reward-meta">
+                                        <t t-esc="tier['backers']"/> backers
+                                        <t t-if="tier['limited']">
+                                            · <t t-esc="tier['remaining']"/> left
+                                        </t>
+                                    </p>
+                                    <p class="uikick-reward-est">Estimated delivery <t t-esc="tier['estimated']"/></p>
+                                    <button class="uikick-btn-outline uikick-btn-block">Select</button>
+                                </div>
+                            </t>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>
