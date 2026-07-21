@@ -24,31 +24,34 @@
         });
     }
 
-    function initSort() {
-        var sortSelect = document.querySelector(".uikick-sort select");
-        if (!sortSelect) return;
-        sortSelect.addEventListener("change", function () {
-            var url = new URL(window.location.href);
-            url.searchParams.set("sort", sortSelect.value);
-            window.location.href = url.toString();
+    function initFilterForm() {
+        var form = document.getElementById("uikick-filter-form");
+        if (!form) return;
+        form.querySelectorAll("input[type=checkbox], input[type=radio]").forEach(function (input) {
+            input.addEventListener("change", function () {
+                form.submit();
+            });
         });
+        var sortSelect = document.getElementById("uikick-sort-select");
+        if (sortSelect) {
+            sortSelect.addEventListener("change", function () {
+                form.submit();
+            });
+        }
     }
 
-    function initFilterCounters() {
-        // Ví dụ điểm nối để sau này gọi API lọc project theo checkbox/radio
-        // mà không cần reload toàn trang (fetch + render lại .uikick-grid).
-        document.querySelectorAll(".uikick-sidebar input[type=checkbox], .uikick-sidebar input[type=radio]")
-            .forEach(function (input) {
-                input.addEventListener("change", function () {
-                    // TODO: gọi controller /uikick/filter (JSON-RPC) và render lại grid
-                });
-            });
+    function preserveFiltersOnCategoryLinks() {
+        var query = window.location.search;
+        if (!query) return;
+        document.querySelectorAll(".uikick-cat-link").forEach(function (link) {
+            link.href = link.getAttribute("href") + query;
+        });
     }
 
     document.addEventListener("DOMContentLoaded", function () {
         if (!document.querySelector(".uikick-grid")) return; // chỉ chạy trên trang home
         initCardVideos();
-        initSort();
-        initFilterCounters();
+        initFilterForm();
+        preserveFiltersOnCategoryLinks();
     });
 })();

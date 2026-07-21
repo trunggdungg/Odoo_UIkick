@@ -11,7 +11,10 @@
     'author': 'UIKick',
     'depends': ['website'],
     'data': [
+        'security/ir.model.access.csv',
+        'data/uikick_data.xml',
         'views/templates.xml',
+        'views/uikick_backend_views.xml',
     ],
     'assets': {
         'web.assets_frontend': [

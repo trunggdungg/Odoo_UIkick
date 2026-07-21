@@ -8,42 +8,6 @@
         <t t-call="web.frontend_layout">
             <div id="wrap" class="uikick">
 
-                <!-- Top nav -->
-                <header class="uikick-header">
-                    <div class="uikick-header-top">
-                        <div class="uikick-header-left">
-                            <a href="/uikick" class="uikick-logo">
-                                <svg width="20" height="20" viewBox="0 0 40 40" fill="none">
-                                    <path d="M20 0C8.954 0 0 8.954 0 20s8.954 20 20 20 20-8.954 20-20S31.046 0 20 0z" fill="#05ce78"/>
-                                    <path d="M13 10h5v8.5l7-8.5h6l-8 9.5L33 30h-6.5l-7.5-9V30H13V10z" fill="white"/>
-                                </svg>
-                                <span>Kickstarter</span>
-                            </a>
-                            <nav class="uikick-main-nav">
-                                <a href="#">Discover</a>
-                                <a href="#">Our Story</a>
-                                <a href="#">Start a project</a>
-                            </nav>
-                        </div>
-                        <div class="uikick-header-right">
-                            <button class="uikick-btn-link">Log in</button>
-                            <button class="uikick-btn-primary">Sign up</button>
-                        </div>
-                    </div>
-
-                    <!-- Category nav -->
-                    <div class="uikick-category-nav">
-                        <nav>
-                            <t t-foreach="categories" t-as="cat">
-                                <a t-attr-href="'/uikick/category/%s' % cat"
-                                   t-attr-class="'uikick-cat-link active' if cat == active_category else 'uikick-cat-link'">
-                                    <t t-esc="cat"/>
-                                </a>
-                            </t>
-                        </nav>
-                    </div>
-                </header>
-
                 <div class="uikick-body">
                     <!-- Sidebar filters -->
                     <aside class="uikick-sidebar">
@@ -200,24 +164,6 @@
         <t t-call="web.frontend_layout">
             <div id="wrap" class="uikick uikick-detail">
 
-                <header class="uikick-detail-header">
-                    <div class="uikick-header-left">
-                        <a href="/uikick" class="uikick-logo">
-                            <svg width="18" height="18" viewBox="0 0 40 40" fill="none">
-                                <path d="M20 0C8.954 0 0 8.954 0 20s8.954 20 20 20 20-8.954 20-20S31.046 0 20 0z" fill="#05ce78"/>
-                                <path d="M13 10h5v8.5l7-8.5h6l-8 9.5L33 30h-6.5l-7.5-9V30H13V10z" fill="white"/>
-                            </svg>
-                            <span>Kickstarter</span>
-                        </a>
-                        <span class="uikick-sep">›</span>
-                        <a href="#" class="uikick-crumb"><t t-esc="project['category']"/></a>
-                    </div>
-                    <div class="uikick-header-right">
-                        <span><t t-esc="project['location']"/></span>
-                        <button class="uikick-btn-outline">Log in</button>
-                        <button class="uikick-btn-primary">Sign up</button>
-                    </div>
-                </header>
 
                 <!-- Hero -->
                 <div class="uikick-detail-hero">
