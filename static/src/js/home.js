@@ -39,7 +39,7 @@
     function preserveFiltersOnCategoryLinks() {
         var query = window.location.search;
         if (!query) return;
-        document.querySelectorAll(".uikick-cat-link").forEach(function (link) {
+        document.querySelectorAll(".uikick-cat-item").forEach(function (link) {
             link.href = link.getAttribute("href") + query;
         });
     }

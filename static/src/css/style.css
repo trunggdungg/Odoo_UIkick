@@ -8,35 +8,17 @@
 .uikick hr { border: none; border-top: 1px solid #f0f0f0; margin: 20px 0; }
 .uikick button { font-family: inherit; }
 
-/* ==== Header ==== */
-.uikick-header, .uikick-detail-header {
-    background: #1a1a1a;
-    color: #fff;
-}
-.uikick-header-top, .uikick-detail-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 24px;
-}
-.uikick-header-left { display: flex; align-items: center; gap: 32px; }
-.uikick-logo { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; }
-.uikick-main-nav { display: flex; align-items: center; gap: 24px; font-size: 13px; color: #9ca3af; }
-.uikick-main-nav a:hover { color: #fff; }
-.uikick-header-right { display: flex; align-items: center; gap: 16px; font-size: 13px; color: #9ca3af; }
-
-.uikick-btn-link { background: none; border: none; color: #9ca3af; cursor: pointer; font-size: 13px; }
-.uikick-btn-link:hover { color: #fff; }
+/* ==== Buttons ==== */
 .uikick-btn-primary {
     background: #05ce78; color: #000; border: none; border-radius: 999px;
     padding: 6px 16px; font-size: 12px; font-weight: 600; cursor: pointer;
 }
 .uikick-btn-primary:hover { background: #04b86c; }
 .uikick-btn-outline {
-    background: none; border: 1px solid #6b7280; color: #d1d5db; border-radius: 6px;
+    background: none; border: 1px solid #6b7280; color: #374151; border-radius: 6px;
     padding: 6px 12px; font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
 }
-.uikick-btn-outline:hover { color: #fff; border-color: #9ca3af; }
+.uikick-btn-outline:hover { color: #111827; border-color: #9ca3af; }
 .uikick-btn-block { width: 100%; margin-bottom: 8px; padding: 10px; justify-content: center; }
 .uikick-btn-lg { padding: 10px 24px; border-radius: 6px; font-size: 13px; }
 
@@ -48,15 +30,6 @@
 
 .uikick-remind-btn.is-reminded { border-color: #05ce78; color: #05ce78; background: #ecfdf5; }
 
-/* Category nav */
-.uikick-category-nav { border-top: 1px solid rgba(255,255,255,0.1); padding: 0 24px; overflow-x: auto; }
-.uikick-category-nav nav { display: flex; white-space: nowrap; }
-.uikick-cat-link {
-    padding: 12px 16px; font-size: 12px; color: #9ca3af; border-bottom: 2px solid transparent;
-}
-.uikick-cat-link:hover { color: #fff; }
-.uikick-cat-link.active { color: #fff; font-weight: 500; border-bottom-color: #05ce78; }
-
 /* ==== Body layout ==== */
 .uikick-body { display: flex; }
 .uikick-sidebar {
@@ -65,6 +38,10 @@
 }
 .uikick-sidebar-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 16px; }
 .uikick-filter-group h3 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: #6b7280; margin-bottom: 12px; }
+.uikick-category-list { display: flex; flex-direction: column; gap: 2px; max-height: 260px; overflow-y: auto; }
+.uikick-cat-item { font-size: 13px; color: #374151; padding: 5px 6px; border-radius: 4px; }
+.uikick-cat-item:hover { background: #f3f4f6; }
+.uikick-cat-item.active { background: #ecfdf5; color: #05ce78; font-weight: 600; }
 .uikick-check-row { display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: #374151; margin-bottom: 8px; cursor: pointer; }
 .uikick-check-row-single { justify-content: flex-start; gap: 8px; }
 .uikick-count { font-size: 11px; color: #9ca3af; }
@@ -157,9 +134,6 @@
     display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
 }
 .uikick-info-item p { font-size: 12px; color: #4b5563; line-height: 1.6; margin: 0; }
-
-.uikick-sep { color: #6b7280; }
-.uikick-crumb { font-size: 13px; color: #d1d5db; text-decoration: underline; }
 
 .uikick-detail-body { padding: 24px 40px 64px; }
 .uikick-tabs-row {

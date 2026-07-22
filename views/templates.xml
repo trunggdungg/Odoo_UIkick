@@ -5,54 +5,28 @@
     <!-- HOME PAGE (danh sách project + sidebar filter)                -->
     <!-- ============================================================ -->
     <template id="home_page" name="UIKick - Discover">
-        <t t-call="web.layout">
+        <t t-call="web.frontend_layout">
             <t t-set="title" t-value="(active_category or '') + ' Projects — Kickstarter'"/>
-            <t t-set="head">
-                <t t-call-assets="web.assets_frontend" t-js="false"/>
-                <t t-call-assets="web.assets_frontend" t-css="false"/>
-            </t>
             <div id="wrap" class="uikick">
-
-                <!-- Top nav -->
-                <header class="uikick-header">
-                    <div class="uikick-header-top">
-                        <div class="uikick-header-left">
-                            <a href="/uikick" class="uikick-logo">
-                                <svg width="20" height="20" viewBox="0 0 40 40" fill="none">
-                                    <path d="M20 0C8.954 0 0 8.954 0 20s8.954 20 20 20 20-8.954 20-20S31.046 0 20 0z" fill="#05ce78"/>
-                                    <path d="M13 10h5v8.5l7-8.5h6l-8 9.5L33 30h-6.5l-7.5-9V30H13V10z" fill="white"/>
-                                </svg>
-                                <span>Kickstarter</span>
-                            </a>
-                            <nav class="uikick-main-nav">
-                                <a href="#">Discover</a>
-                                <a href="#">Our Story</a>
-                                <a href="#">Start a project</a>
-                            </nav>
-                        </div>
-                        <div class="uikick-header-right">
-                            <button class="uikick-btn-link">Log in</button>
-                            <button class="uikick-btn-primary">Sign up</button>
-                        </div>
-                    </div>
-
-                    <!-- Category nav -->
-                    <div class="uikick-category-nav">
-                        <nav>
-                            <t t-foreach="categories" t-as="cat">
-                                <a t-att-href="'/uikick/category/' + cat" class="uikick-cat-link"
-                                   t-att-class="'uikick-cat-link active' if cat == active_category else 'uikick-cat-link'">
-                                    <t t-esc="cat"/>
-                                </a>
-                            </t>
-                        </nav>
-                    </div>
-                </header>
 
                 <div class="uikick-body">
                     <!-- Sidebar filters -->
                     <form method="get" id="uikick-filter-form" class="uikick-sidebar">
                         <p class="uikick-sidebar-title">Filter by</p>
+
+                        <div class="uikick-filter-group">
+                            <h3>Category</h3>
+                            <div class="uikick-category-list">
+                                <t t-foreach="categories" t-as="cat">
+                                    <a t-att-href="'/uikick/category/' + cat"
+                                       t-att-class="'uikick-cat-item active' if cat == active_category else 'uikick-cat-item'">
+                                        <t t-esc="cat"/>
+                                    </a>
+                                </t>
+                            </div>
+                        </div>
+
+                        <hr/>
 
                         <div class="uikick-filter-group">
                             <h3>Project status</h3>
@@ -224,32 +198,9 @@
     <!-- DETAIL PAGE (chi tiết chiến dịch)                             -->
     <!-- ============================================================ -->
     <template id="detail_page" name="UIKick - Campaign Detail">
-        <t t-call="web.layout">
+        <t t-call="web.frontend_layout">
             <t t-set="title" t-value="(project.title or '') + ' — Kickstarter'"/>
-            <t t-set="head">
-                <t t-call-assets="web.assets_frontend" t-js="false"/>
-                <t t-call-assets="web.assets_frontend" t-css="false"/>
-            </t>
             <div id="wrap" class="uikick uikick-detail">
-
-                <header class="uikick-detail-header">
-                    <div class="uikick-header-left">
-                        <a href="/uikick" class="uikick-logo">
-                            <svg width="18" height="18" viewBox="0 0 40 40" fill="none">
-                                <path d="M20 0C8.954 0 0 8.954 0 20s8.954 20 20 20 20-8.954 20-20S31.046 0 20 0z" fill="#05ce78"/>
-                                <path d="M13 10h5v8.5l7-8.5h6l-8 9.5L33 30h-6.5l-7.5-9V30H13V10z" fill="white"/>
-                            </svg>
-                            <span>Kickstarter</span>
-                        </a>
-                        <span class="uikick-sep">›</span>
-                        <a href="#" class="uikick-crumb"><t t-esc="project.category"/></a>
-                    </div>
-                    <div class="uikick-header-right">
-                        <span><t t-esc="project.location"/></span>
-                        <button class="uikick-btn-outline">Log in</button>
-                        <button class="uikick-btn-primary">Sign up</button>
-                    </div>
-                </header>
 
                 <!-- Hero title -->
                 <div class="uikick-detail-hero">
