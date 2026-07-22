@@ -45,9 +45,10 @@
     }
 
     function initMobileFilterToggle() {
-        // Event delegation on document: some Odoo frontend/editor scripts can
-        // rebuild the button node after our own DOMContentLoaded handler runs,
-        // which would silently drop a listener bound directly to that node.
+        // Capture phase + delegation: this Odoo build has several other
+        // document-level click listeners registered with useCapture:true that
+        // can stop propagation before a normal (bubble-phase) listener ever
+        // sees the click, so bind ours in the capture phase too.
         document.addEventListener("click", function (ev) {
             var toggle = ev.target.closest("#uikick-filter-toggle");
             if (!toggle) return;
@@ -55,7 +56,7 @@
             if (!sidebar) return;
             var isOpen = sidebar.classList.toggle("is-open");
             toggle.classList.toggle("is-open", isOpen);
-        });
+        }, true);
     }
 
     document.addEventListener("DOMContentLoaded", function () {
