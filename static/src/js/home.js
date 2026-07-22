@@ -45,10 +45,14 @@
     }
 
     function initMobileFilterToggle() {
-        var toggle = document.getElementById("uikick-filter-toggle");
-        var sidebar = document.getElementById("uikick-filter-form");
-        if (!toggle || !sidebar) return;
-        toggle.addEventListener("click", function () {
+        // Event delegation on document: some Odoo frontend/editor scripts can
+        // rebuild the button node after our own DOMContentLoaded handler runs,
+        // which would silently drop a listener bound directly to that node.
+        document.addEventListener("click", function (ev) {
+            var toggle = ev.target.closest("#uikick-filter-toggle");
+            if (!toggle) return;
+            var sidebar = document.getElementById("uikick-filter-form");
+            if (!sidebar) return;
             var isOpen = sidebar.classList.toggle("is-open");
             toggle.classList.toggle("is-open", isOpen);
         });
