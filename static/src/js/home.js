@@ -44,10 +44,21 @@
         });
     }
 
+    function initMobileFilterToggle() {
+        var toggle = document.getElementById("uikick-filter-toggle");
+        var sidebar = document.getElementById("uikick-filter-form");
+        if (!toggle || !sidebar) return;
+        toggle.addEventListener("click", function () {
+            var isOpen = sidebar.classList.toggle("is-open");
+            toggle.classList.toggle("is-open", isOpen);
+        });
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
         if (!document.querySelector(".uikick-grid")) return; // chỉ chạy trên trang home
         initCardVideos();
         initFilterForm();
         preserveFiltersOnCategoryLinks();
+        initMobileFilterToggle();
     });
 })();

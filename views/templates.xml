@@ -11,6 +11,15 @@
 
                 <div class="uikick-body">
                     <!-- Sidebar filters -->
+                    <button type="button" id="uikick-filter-toggle" class="uikick-filter-toggle">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12h12M3 6h18M9 18h6"/>
+                        </svg>
+                        Filter by
+                        <svg class="uikick-filter-toggle-chevron" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
                     <form method="get" id="uikick-filter-form" class="uikick-sidebar">
                         <p class="uikick-sidebar-title">Filter by</p>
 
