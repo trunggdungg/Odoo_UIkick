@@ -36,14 +36,6 @@
         }
     }
 
-    function preserveFiltersOnCategoryLinks() {
-        var query = window.location.search;
-        if (!query) return;
-        document.querySelectorAll(".uikick-cat-item").forEach(function (link) {
-            link.href = link.getAttribute("href") + query;
-        });
-    }
-
     function initMobileFilterToggle() {
         // Capture phase + delegation: this Odoo build has several other
         // document-level click listeners registered with useCapture:true that
@@ -74,7 +66,6 @@
         if (!document.querySelector(".uikick-grid")) return; // chỉ chạy trên trang home
         initCardVideos();
         initFilterForm();
-        preserveFiltersOnCategoryLinks();
         initMobileFilterToggle();
     });
 })();

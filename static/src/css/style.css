@@ -39,9 +39,8 @@
 .uikick-sidebar-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 16px; }
 .uikick-filter-group h3 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: #6b7280; margin-bottom: 12px; }
 .uikick-category-list { display: flex; flex-direction: column; gap: 2px; max-height: 260px; overflow-y: auto; }
-.uikick-cat-item { font-size: 13px; color: #374151; padding: 5px 6px; border-radius: 4px; }
-.uikick-cat-item:hover { background: #f3f4f6; }
-.uikick-cat-item.active { background: #ecfdf5; color: #05ce78; font-weight: 600; }
+.uikick-cat-check-row { padding: 4px 6px; border-radius: 4px; margin-bottom: 0; }
+.uikick-cat-check-row:hover { background: #f3f4f6; }
 .uikick-check-row { display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: #374151; margin-bottom: 8px; cursor: pointer; }
 .uikick-check-row-single { justify-content: flex-start; gap: 8px; }
 .uikick-count { font-size: 11px; color: #9ca3af; }

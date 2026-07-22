@@ -32,11 +32,22 @@ class UikickController(http.Controller):
                 type='http', auth='public', website=True, sitemap=True)
     def home(self, category=None, **kw):
         Project = request.env['uikick.project'].sudo()
-        requested_category = category or "Technology"
 
-        # fall back to the full catalog if the requested category has no projects
-        domain = [('category', '=', requested_category)]
-        if not Project.search_count(domain):
+        query_categories = [c for c in request.httprequest.args.getlist('category') if c in CATEGORIES]
+        categories_submitted = 'categories_submitted' in request.httprequest.args
+
+        if categories_submitted:
+            # the sidebar's checkbox form was submitted — trust it as-is,
+            # including an empty selection meaning "show every category"
+            selected_categories = query_categories
+        elif category:
+            selected_categories = [category]
+        else:
+            selected_categories = ["Technology"]
+
+        domain = [('category', 'in', selected_categories)] if selected_categories else []
+        if domain and not Project.search_count(domain):
+            # none of the selected categories have any projects – show everything instead
             domain = []
 
         statuses = [s for s in request.httprequest.args.getlist('status') if s in ('live', 'upcoming')]
@@ -51,12 +62,20 @@ class UikickController(http.Controller):
         order = ORDER_BY_SORT.get(sort, 'sequence asc, id asc')
         projects = Project.search(domain, order=order)
 
+        if not selected_categories:
+            header_label = 'All Projects'
+        elif len(selected_categories) == 1:
+            header_label = selected_categories[0]
+        else:
+            header_label = str(len(selected_categories)) + ' Categories'
+
         values = {
             'categories': CATEGORIES,
-            'active_category': requested_category,
+            'header_label': header_label,
             'projects': projects,
             'sort_options': SORT_OPTIONS,
             'filters': {
+                'categories': selected_categories,
                 'status': statuses,
                 'location': location,
                 'sort': sort,
