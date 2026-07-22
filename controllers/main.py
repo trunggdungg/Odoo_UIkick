@@ -26,20 +26,6 @@ ORDER_BY_SORT = {
     "End date": "days_left asc",
 }
 
-GOAL_BUCKETS = {
-    "under_1000": [("goal", "<", 1000)],
-    "1000_10000": [("goal", ">=", 1000), ("goal", "<=", 10000)],
-    "10000_100000": [("goal", ">=", 10000), ("goal", "<=", 100000)],
-}
-
-
-def _to_int(value):
-    try:
-        return int(value)
-    except (TypeError, ValueError):
-        return None
-
-
 class UikickController(http.Controller):
 
     @http.route(['/uikick', '/uikick/category/<string:category>'],
@@ -61,17 +47,6 @@ class UikickController(http.Controller):
         if location:
             domain.append(('location', 'ilike', location))
 
-        goal_bucket = kw.get('goal') or ''
-        if goal_bucket in GOAL_BUCKETS:
-            domain += GOAL_BUCKETS[goal_bucket]
-
-        amount_min = _to_int(kw.get('amount_min'))
-        if amount_min is not None:
-            domain.append(('amount_raised', '>=', amount_min))
-        amount_max = _to_int(kw.get('amount_max'))
-        if amount_max is not None:
-            domain.append(('amount_raised', '<=', amount_max))
-
         sort = kw.get('sort') or 'Relevance'
         order = ORDER_BY_SORT.get(sort, 'sequence asc, id asc')
         projects = Project.search(domain, order=order)
@@ -84,9 +59,6 @@ class UikickController(http.Controller):
             'filters': {
                 'status': statuses,
                 'location': location,
-                'goal': goal_bucket,
-                'amount_min': kw.get('amount_min') or '',
-                'amount_max': kw.get('amount_max') or '',
                 'sort': sort,
             },
         }

@@ -45,15 +45,10 @@
 .uikick-check-row { display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: #374151; margin-bottom: 8px; cursor: pointer; }
 .uikick-check-row-single { justify-content: flex-start; gap: 8px; }
 .uikick-count { font-size: 11px; color: #9ca3af; }
-.uikick-radio-row { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #374151; margin-bottom: 8px; cursor: pointer; }
 .uikick-input, .uikick-select {
     width: 100%; font-size: 12px; border: 1px solid #d1d5db; border-radius: 4px; padding: 8px 10px;
     margin-bottom: 8px; background: #fff; color: #374151;
 }
-.uikick-amount-row { display: flex; gap: 8px; }
-.uikick-amount-field { position: relative; flex: 1; }
-.uikick-amount-field span { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 12px; color: #9ca3af; }
-.uikick-amount-field input { width: 100%; font-size: 12px; border: 1px solid #d1d5db; border-radius: 4px; padding: 8px 8px 8px 20px; }
 .uikick-filter-apply { margin-top: 8px; }
 
 .uikick-main { flex: 1; padding: 24px 32px; min-width: 0; }
