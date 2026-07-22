@@ -243,77 +243,101 @@
                     </div>
                 </header>
 
-                <!-- Hero -->
+                <!-- Hero title -->
                 <div class="uikick-detail-hero">
                     <div class="uikick-container">
                         <h1><t t-esc="project.title"/></h1>
                         <p class="uikick-detail-desc"><t t-esc="project.description"/></p>
+                    </div>
+                </div>
 
-                        <div class="uikick-stats-row">
-                            <div class="uikick-stat">
-                                <div class="uikick-stat-value">US$<t t-esc="'{:,}'.format(project.amount_raised)"/></div>
-                                <div class="uikick-stat-label">pledged of US$<t t-esc="'{:,}'.format(project.goal)"/> goal</div>
+                <!-- Hero media: video (left) + pledge sidebar (right), matching real Kickstarter campaign pages -->
+                <div class="uikick-hero-media">
+                    <div class="uikick-container uikick-hero-row">
+                        <div class="uikick-hero-video-col">
+                            <div class="uikick-hero-video" id="uikick-hero-video">
+                                <video t-att-src="project.video_url" muted="muted" loop="loop" playsinline="playsinline"
+                                       class="uikick-hero-video-el"/>
+                                <div class="uikick-hero-play-overlay">
+                                    <div class="uikick-hero-play-circle">
+                                        <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    </div>
+                                </div>
+                                <div class="uikick-hero-pause-overlay">
+                                    <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                                </div>
+                                <div class="uikick-hero-text-overlay">
+                                    <t t-if="project.campaign_number">
+                                        <div class="uikick-hero-campaign-num">
+                                            OUR <t t-esc="'%sTH' % project.campaign_number"/><br/>CAMPAIGN.
+                                        </div>
+                                    </t>
+                                    <t t-if="project.total_raised">
+                                        <div class="uikick-hero-total">
+                                            <t t-esc="project.total_raised"/> raised &amp; <t t-esc="project.total_backers"/> backers.
+                                        </div>
+                                    </t>
+                                </div>
                             </div>
-                            <div class="uikick-stat-divider"/>
-                            <div class="uikick-stat">
-                                <div class="uikick-stat-value"><t t-esc="'{:,}'.format(project.backers)"/></div>
-                                <div class="uikick-stat-label">backers</div>
+                            <div class="uikick-hero-tags">
+                                <span class="uikick-hero-tag">
+                                    <svg width="14" height="14" fill="none" stroke="#05ce78" stroke-width="1.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+                                    </svg>
+                                    Project We Love
+                                </span>
+                                <span class="uikick-hero-tag">
+                                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447 2.724A1 1 0 013 21.882V6.618a1 1 0 01.553-.894L9 3m0 17l6 3m-6-3V3m6 17l5.447 2.724A1 1 0 0021 21.882V6.618a1 1 0 00-.553-.894L15 3m0 17V3m0 0L9 3"/>
+                                    </svg>
+                                    <t t-esc="project.category"/>
+                                </span>
+                                <span class="uikick-hero-tag">
+                                    <svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                              d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"/>
+                                    </svg>
+                                    <t t-esc="project.location"/>
+                                </span>
                             </div>
-                            <div class="uikick-stat-divider"/>
-                            <div class="uikick-stat">
-                                <div class="uikick-stat-value"><t t-esc="project.days_left"/></div>
-                                <div class="uikick-stat-label">days to go</div>
+                        </div>
+
+                        <aside class="uikick-hero-pledge">
+                            <div class="uikick-progress">
+                                <div class="uikick-progress-track">
+                                    <div class="uikick-progress-fill"
+                                         t-att-style="'width:%s%%' % min(project.percent_funded, 100)"/>
+                                </div>
                             </div>
-                            <div class="uikick-hero-actions">
-                                <button class="uikick-btn-primary uikick-btn-lg">Back this project</button>
+                            <div class="uikick-pledge-amount">US$<t t-esc="'{:,}'.format(project.amount_raised)"/></div>
+                            <p class="uikick-pledge-goal">pledged of US$<t t-esc="'{:,}'.format(project.goal)"/> goal</p>
+                            <div class="uikick-hero-pledge-stats">
+                                <div class="uikick-hero-pledge-stat">
+                                    <div class="uikick-pledge-stat-value"><t t-esc="'{:,}'.format(project.backers)"/></div>
+                                    <div class="uikick-pledge-stat-label">backers</div>
+                                </div>
+                                <div class="uikick-hero-pledge-stat">
+                                    <div class="uikick-pledge-stat-value"><t t-esc="project.days_left"/></div>
+                                    <div class="uikick-pledge-stat-label">days to go</div>
+                                </div>
+                            </div>
+                            <button class="uikick-btn-primary uikick-btn-block">Back this project</button>
+                            <div class="uikick-hero-secondary-row">
                                 <button type="button" class="uikick-btn-outline uikick-remind-btn">
                                     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/>
                                     </svg>
                                     <span class="uikick-remind-label">Remind me</span>
                                 </button>
-                                <button type="button" class="uikick-icon-btn" aria-label="Save">
-                                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
-                                    </svg>
-                                </button>
-                                <button type="button" class="uikick-icon-btn" aria-label="Share">
-                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Hero media (sits above the trust banner, matching real Kickstarter campaign pages) -->
-                <div class="uikick-hero-media">
-                    <div class="uikick-container">
-                        <div class="uikick-hero-video" id="uikick-hero-video">
-                            <video t-att-src="project.video_url" muted="muted" loop="loop" playsinline="playsinline"
-                                   class="uikick-hero-video-el"/>
-                            <div class="uikick-hero-play-overlay">
-                                <div class="uikick-hero-play-circle">
-                                    <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                <div class="uikick-hero-share-row">
+                                    <button type="button" aria-label="Share on X">𝕏</button>
+                                    <button type="button" aria-label="Share on Facebook">f</button>
+                                    <button type="button" aria-label="Share on LinkedIn">in</button>
+                                    <button type="button" aria-label="Share by email">📧</button>
                                 </div>
                             </div>
-                            <div class="uikick-hero-pause-overlay">
-                                <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-                            </div>
-                            <div class="uikick-hero-text-overlay">
-                                <t t-if="project.campaign_number">
-                                    <div class="uikick-hero-campaign-num">
-                                        OUR <t t-esc="'%sTH' % project.campaign_number"/><br/>CAMPAIGN.
-                                    </div>
-                                </t>
-                                <t t-if="project.total_raised">
-                                    <div class="uikick-hero-total">
-                                        <t t-esc="project.total_raised"/> raised &amp; <t t-esc="project.total_backers"/> backers.
-                                    </div>
-                                </t>
-                            </div>
-                        </div>
+                            <p class="uikick-all-or-nothing"><strong>All or nothing.</strong> This project will only be funded if it reaches its goal by the campaign deadline.</p>
+                        </aside>
                     </div>
                 </div>
 
@@ -491,36 +515,6 @@
                                     about creating products that surprise and delight.
                                 </p>
                                 <button class="uikick-link-btn">Contact me</button>
-                            </div>
-
-                            <div class="uikick-pledge-box">
-                                <div class="uikick-progress">
-                                    <div class="uikick-progress-track">
-                                        <div class="uikick-progress-fill"
-                                             t-att-style="'width:%s%%' % min(project.percent_funded, 100)"/>
-                                    </div>
-                                </div>
-                                <div class="uikick-pledge-amount">US$<t t-esc="'{:,}'.format(project.amount_raised)"/></div>
-                                <p class="uikick-pledge-goal">pledged of US$<t t-esc="'{:,}'.format(project.goal)"/> goal</p>
-                                <div class="uikick-pledge-stats">
-                                    <div>
-                                        <div class="uikick-pledge-stat-value"><t t-esc="'{:,}'.format(project.backers)"/></div>
-                                        <div class="uikick-pledge-stat-label">backers</div>
-                                    </div>
-                                    <div>
-                                        <div class="uikick-pledge-stat-value"><t t-esc="project.days_left"/></div>
-                                        <div class="uikick-pledge-stat-label">days to go</div>
-                                    </div>
-                                </div>
-                                <div class="uikick-pledge-actions">
-                                    <button class="uikick-btn-primary uikick-btn-block">Back this project</button>
-                                    <button type="button" class="uikick-btn-outline uikick-btn-block uikick-remind-btn">
-                                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/>
-                                        </svg>
-                                        <span class="uikick-remind-label">Remind me</span>
-                                    </button>
-                                </div>
                             </div>
 
                             <div class="uikick-support-box">
