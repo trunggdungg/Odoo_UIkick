@@ -31,7 +31,7 @@
 .uikick-remind-btn.is-reminded { border-color: #05ce78; color: #05ce78; background: #ecfdf5; }
 
 /* ==== Body layout ==== */
-.uikick-body { display: flex; padding: 0 32px; }
+.uikick-body { display: flex; max-width: 1320px; margin: 0 auto; padding: 0 32px; }
 .uikick-sidebar {
     width: 224px; flex-shrink: 0; border-right: 1px solid #e5e7eb;
     padding: 24px 24px 24px 32px; min-height: 100vh; margin: 0;
