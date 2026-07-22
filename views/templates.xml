@@ -202,6 +202,17 @@
             <t t-set="title" t-value="(project.title or '') + ' — Kickstarter'"/>
             <div id="wrap" class="uikick uikick-detail">
 
+                <!-- Breadcrumb -->
+                <nav class="uikick-breadcrumb">
+                    <div class="uikick-container">
+                        <a href="/uikick">Discover</a>
+                        <span class="uikick-breadcrumb-sep">›</span>
+                        <a t-att-href="'/uikick/category/' + project.category"><t t-esc="project.category"/></a>
+                        <span class="uikick-breadcrumb-sep">›</span>
+                        <span class="uikick-breadcrumb-current"><t t-esc="project.title"/></span>
+                    </div>
+                </nav>
+
                 <!-- Hero title -->
                 <div class="uikick-detail-hero">
                     <div class="uikick-container">

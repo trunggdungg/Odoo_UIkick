@@ -31,7 +31,7 @@
 .uikick-remind-btn.is-reminded { border-color: #05ce78; color: #05ce78; background: #ecfdf5; }
 
 /* ==== Body layout ==== */
-.uikick-body { display: flex; }
+.uikick-body { display: flex; padding: 0 32px; }
 .uikick-sidebar {
     width: 224px; flex-shrink: 0; border-right: 1px solid #e5e7eb;
     padding: 24px 20px; min-height: 100vh; margin: 0;
@@ -100,8 +100,16 @@
 .uikick-card-location span { font-size: 12px; }
 
 /* ==== Detail page ==== */
-.uikick-detail-hero { padding: 24px 40px 0; }
 .uikick-container { max-width: 1152px; margin: 0 auto; }
+.uikick-breadcrumb { padding: 16px 40px 0; font-size: 12px; color: #9ca3af; }
+.uikick-breadcrumb a { color: #6b7280; }
+.uikick-breadcrumb a:hover { color: #05ce78; text-decoration: underline; }
+.uikick-breadcrumb-sep { margin: 0 6px; color: #d1d5db; }
+.uikick-breadcrumb-current {
+    color: #374151; display: inline-block; max-width: 360px; vertical-align: bottom;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.uikick-detail-hero { padding: 12px 40px 0; }
 .uikick-detail-hero h1 { font-size: 20px; font-weight: 700; margin: 0 0 4px; }
 .uikick-detail-desc { font-size: 13px; color: #6b7280; max-width: 720px; margin: 0; line-height: 1.6; }
 
@@ -258,7 +266,7 @@
 .uikick-share-icons button:hover { border-color: #9ca3af; color: #1f2937; }
 
 @media (max-width: 900px) {
-    .uikick-body { flex-direction: column; }
+    .uikick-body { flex-direction: column; padding: 0 16px; }
     .uikick-sidebar { width: 100%; min-height: auto; border-right: none; border-bottom: 1px solid #e5e7eb; }
     .uikick-detail-columns { flex-direction: column; }
     .uikick-toc-sidebar { display: none; }
