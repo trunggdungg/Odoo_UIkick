@@ -8,14 +8,26 @@ CATEGORIES = [
     "Photography", "Publishing", "Technology", "Theater",
 ]
 
+# Internal ids used for data-tab matching/JS — the visible label is translated
+# separately via TAB_LABELS so the tab-switching logic doesn't have to compare
+# against Vietnamese strings.
 TABS = ["Campaign", "Rewards", "Creator", "FAQ", "Updates", "Comments", "Community"]
+TAB_LABELS = {
+    "Campaign": "Giới thiệu",
+    "Rewards": "Tính năng",
+    "Creator": "Tác giả",
+    "FAQ": "FAQ",
+    "Updates": "Cập nhật",
+    "Comments": "Bình luận",
+    "Community": "Cộng đồng",
+}
 
 TOC_ITEMS = [
-    "Base Campaign Overview", "Design From Knowledge", "Benefiting: Portability",
-    "3rd Gen. Cooling", "Larger Air Intake", "5 Mode Fan Control",
-    "Ultimate Choices for Every Device", "4 Brains, Smarter Control",
-    "Max 8TB, Swappable SSD", "100Gbps, Transfer Speed",
-    "Low Power, High Compatibility", "Demo Test Video", "Timeline",
+    "Tổng quan sản phẩm", "Thiết kế dựa trên tri thức", "Lợi ích: Tính di động",
+    "Tản nhiệt thế hệ 3", "Cửa hút gió lớn hơn", "Điều khiển quạt 5 chế độ",
+    "Lựa chọn hoàn hảo cho mọi thiết bị", "4 bộ xử lý, điều khiển thông minh hơn",
+    "SSD tháo rời tối đa 8TB", "Tốc độ truyền tải 100Gbps",
+    "Tiết kiệm điện, tương thích cao", "Video demo", "Lộ trình ra mắt",
 ]
 
 SORT_OPTIONS = ["Relevance", "Most funded", "Most backed", "Newest", "End date"]
@@ -94,6 +106,7 @@ class UikickController(http.Controller):
         values = {
             'project': project,
             'tabs': TABS,
+            'tab_labels': TAB_LABELS,
             'toc_items': TOC_ITEMS,
             'reward_tiers': reward_tiers,
         }

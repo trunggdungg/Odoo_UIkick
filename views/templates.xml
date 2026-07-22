@@ -181,7 +181,7 @@
                 <!-- Breadcrumb -->
                 <nav class="uikick-breadcrumb">
                     <div class="uikick-container">
-                        <a href="/uikick">Discover</a>
+                        <a href="/uikick">Khám phá</a>
                         <span class="uikick-breadcrumb-sep">›</span>
                         <a t-att-href="'/uikick/category/' + project.category"><t t-esc="project.category"/></a>
                         <span class="uikick-breadcrumb-sep">›</span>
@@ -215,14 +215,12 @@
                                 <div class="uikick-hero-text-overlay">
                                     <t t-if="project.campaign_number">
                                         <div class="uikick-hero-campaign-num">
-                                            OUR <t t-esc="str(project.campaign_number) + 'TH'"/><br/>CAMPAIGN.
+                                            SẢN PHẨM THỨ <t t-esc="str(project.campaign_number)"/>.
                                         </div>
                                     </t>
-                                    <t t-if="project.total_raised">
-                                        <div class="uikick-hero-total">
-                                            <t t-esc="project.total_raised"/> raised &amp; <t t-esc="project.total_backers"/> backers.
-                                        </div>
-                                    </t>
+                                    <div class="uikick-hero-total">
+                                        <t t-esc="'{:,}'.format(project.backers).replace(',', '.')"/> người đã quan tâm sản phẩm này.
+                                    </div>
                                 </div>
                             </div>
                             <div class="uikick-hero-tags">
@@ -230,7 +228,7 @@
                                     <svg width="14" height="14" fill="none" stroke="#05ce78" stroke-width="1.5" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
                                     </svg>
-                                    Project We Love
+                                    Sản phẩm nổi bật
                                 </span>
                                 <span class="uikick-hero-tag">
                                     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -249,40 +247,43 @@
                         </div>
 
                         <aside class="uikick-hero-pledge">
-                            <div class="uikick-progress">
-                                <div class="uikick-progress-track">
-                                    <div class="uikick-progress-fill"
-                                         t-attf-style="width: {{ min(project.percent_funded or 0, 100) }}%;"/>
-                                </div>
+                            <div class="uikick-interest-accent"/>
+                            <div class="uikick-interest-count">
+                                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+                                </svg>
+                                <span><t t-esc="'{:,}'.format(project.backers).replace(',', '.')"/></span>
                             </div>
-                            <div class="uikick-pledge-amount">US$<t t-esc="'{:,}'.format(project.amount_raised)"/></div>
-                            <p class="uikick-pledge-goal">pledged of US$<t t-esc="'{:,}'.format(project.goal)"/> goal</p>
-                            <div class="uikick-hero-pledge-stats">
-                                <div class="uikick-hero-pledge-stat">
-                                    <div class="uikick-pledge-stat-value"><t t-esc="'{:,}'.format(project.backers)"/></div>
-                                    <div class="uikick-pledge-stat-label">backers</div>
-                                </div>
-                                <div class="uikick-hero-pledge-stat">
-                                    <div class="uikick-pledge-stat-value"><t t-esc="project.days_left"/></div>
-                                    <div class="uikick-pledge-stat-label">days to go</div>
-                                </div>
+                            <p class="uikick-interest-label">người đã quan tâm sản phẩm</p>
+
+                            <div class="uikick-hero-meta-group">
+                                <h4>Danh mục</h4>
+                                <span class="uikick-category-badge"><t t-esc="project.category"/></span>
                             </div>
-                            <button class="uikick-btn-primary uikick-btn-block">Back this project</button>
-                            <div class="uikick-hero-secondary-row">
-                                <button type="button" class="uikick-btn-outline uikick-remind-btn">
-                                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/>
+                            <div class="uikick-hero-meta-group">
+                                <h4>Địa điểm</h4>
+                                <div class="uikick-hero-location">
+                                    <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                              d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"/>
                                     </svg>
-                                    <span class="uikick-remind-label">Remind me</span>
-                                </button>
-                                <div class="uikick-hero-share-row">
-                                    <button type="button" aria-label="Share on X">𝕏</button>
-                                    <button type="button" aria-label="Share on Facebook">f</button>
-                                    <button type="button" aria-label="Share on LinkedIn">in</button>
-                                    <button type="button" aria-label="Share by email">📧</button>
+                                    <t t-esc="project.location"/>
                                 </div>
                             </div>
-                            <p class="uikick-all-or-nothing"><strong>All or nothing.</strong> This project will only be funded if it reaches its goal by the campaign deadline.</p>
+
+                            <button class="uikick-btn-primary uikick-btn-block">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+                                </svg>
+                                Quan tâm ngay
+                            </button>
+                            <button type="button" class="uikick-btn-outline uikick-btn-block uikick-remind-btn">
+                                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                </svg>
+                                <span class="uikick-remind-label">Để lại thông tin</span>
+                            </button>
+                            <p class="uikick-interest-help">Nhấn "Quan tâm" để theo dõi sản phẩm và nhận thông báo khi có cập nhật mới.</p>
                         </aside>
                     </div>
                 </div>
@@ -297,7 +298,7 @@
                                     <path d="M13 10h5v8.5l7-8.5h6l-8 9.5L33 30h-6.5l-7.5-9V30H13V10z" fill="white"/>
                                 </svg>
                             </div>
-                            <p>Kickstarter connects creators with backers to fund creative projects.</p>
+                            <p>Khám phá các sản phẩm sáng tạo từ khắp nơi trên thế giới.</p>
                         </div>
                         <div class="uikick-info-item">
                             <div class="uikick-info-icon">
@@ -305,7 +306,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/>
                                 </svg>
                             </div>
-                            <p>Rewards aren't guaranteed, but creators must regularly update backers.</p>
+                            <p>Nhận thông báo cập nhật mới nhất từ tác giả khi bạn quan tâm sản phẩm.</p>
                         </div>
                         <div class="uikick-info-item">
                             <div class="uikick-info-icon">
@@ -313,7 +314,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
                             </div>
-                            <p>You're only charged if the project meets its funding goal by the campaign deadline.</p>
+                            <p>Kết nối trực tiếp với tác giả và cộng đồng yêu thích sản phẩm.</p>
                         </div>
                     </div>
                 </div>
@@ -325,18 +326,18 @@
                             <t t-foreach="tabs" t-as="tab">
                                 <a href="#" t-att-data-tab="tab"
                                    t-att-class="'uikick-tab active' if tab_index == 0 else 'uikick-tab'">
-                                    <t t-esc="tab"/>
+                                    <t t-esc="tab_labels.get(tab, tab)"/>
                                     <t t-if="tab == 'Comments'"><span class="uikick-tab-count">70</span></t>
                                 </a>
                             </t>
                         </nav>
                         <div class="uikick-tabs-actions">
-                            <button class="uikick-btn-primary">Back this project</button>
+                            <button class="uikick-btn-primary">Quan tâm ngay</button>
                             <button type="button" class="uikick-btn-outline uikick-remind-btn">
                                 <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                 </svg>
-                                <span class="uikick-remind-label">Remind me</span>
+                                <span class="uikick-remind-label">Để lại thông tin</span>
                             </button>
                         </div>
                     </div>
@@ -354,23 +355,22 @@
                         <!-- Center: tab content -->
                         <main class="uikick-detail-main">
                             <div class="uikick-tab-content active" data-tab="Campaign">
-                                <h2 class="uikick-section-title">Story</h2>
+                                <h2 class="uikick-section-title">Câu chuyện sản phẩm</h2>
 
                                 <div class="uikick-story-text">
                                     <p>
-                                        After <t t-esc="project.campaign_number or 1"/> successful campaigns and over
-                                        <t t-esc="project.total_raised or ('$' + '{:,}'.format(project.amount_raised))"/> raised from
-                                        <t t-esc="project.total_backers or '{:,}'.format(project.backers)"/> backers worldwide,
-                                        we're back with our most ambitious product yet.
+                                        Được phát triển bởi <strong><t t-esc="project.creator"/></strong>, sản phẩm
+                                        <strong><t t-esc="project.title"/></strong> ra đời từ nhu cầu thực tế của người dùng
+                                        hiện đại — đơn giản, mạnh mẽ và đẹp mắt.
                                     </p>
                                     <p>
-                                        The <strong><t t-esc="(project.title or '').split('|')[0].strip()"/></strong> combines
-                                        cutting-edge engineering with maximum portability. Every detail has been refined based on
-                                        backer feedback from our previous campaigns.
+                                        Với hơn <t t-esc="'{:,}'.format(project.backers).replace(',', '.')"/> người đã quan tâm
+                                        trên toàn thế giới, đây là minh chứng cho sức hút của một sản phẩm được thiết kế thực sự
+                                        lấy người dùng làm trung tâm.
                                     </p>
 
                                     <div class="uikick-feature-box">
-                                        <h3>Key Features</h3>
+                                        <h3>Tính năng nổi bật</h3>
                                         <div class="uikick-feature-grid">
                                             <t t-foreach="(project.description or '').split('|')" t-as="feat">
                                                 <t t-if="feat.strip()">
@@ -384,44 +384,73 @@
                                     </div>
 
                                     <p>
-                                        We're committed to making this the best version yet. Our engineering team has spent
-                                        over 18 months perfecting the thermal management system, resulting in a 40% improvement
-                                        in cooling efficiency over the previous generation.
-                                    </p>
-                                    <p>
-                                        With your backing, we'll bring this to life and ship to backers worldwide. Join
-                                        thousands of early supporters already committed to making this happen.
+                                        Đội ngũ kỹ sư đã mất hơn 18 tháng để hoàn thiện từng chi tiết, từ hệ thống tản nhiệt
+                                        cho đến trải nghiệm người dùng. Kết quả là một sản phẩm vượt trội hơn 40% so với
+                                        thế hệ trước.
                                     </p>
 
                                     <div class="uikick-milestone-box">
-                                        <div class="uikick-milestone-pct"><t t-esc="project.percent_funded"/>% FUNDED</div>
-                                        <div class="uikick-milestone-meta">
-                                            <t t-esc="'{:,}'.format(project.backers)"/> backers — <t t-esc="project.days_left"/> days remaining
+                                        <div class="uikick-milestone-pct"><t t-esc="'{:,}'.format(project.backers).replace(',', '.')"/> NGƯỜI QUAN TÂM</div>
+                                        <div class="uikick-milestone-meta">Hãy là người tiếp theo — để lại thông tin bên dưới.</div>
+                                    </div>
+
+                                    <p>
+                                        Chúng tôi sẽ thông báo cho bạn ngay khi sản phẩm sẵn sàng ra mắt. Đừng bỏ lỡ cơ hội
+                                        trải nghiệm đầu tiên.
+                                    </p>
+
+                                    <div class="uikick-lead-form">
+                                        <h3>
+                                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+                                            </svg>
+                                            Để lại thông tin quan tâm
+                                        </h3>
+                                        <p class="uikick-lead-form-desc">Chúng tôi sẽ liên hệ với bạn ngay khi sản phẩm có thông tin mới nhất.</p>
+                                        <div class="uikick-lead-form-row">
+                                            <div class="uikick-lead-field">
+                                                <label>Họ và tên <span class="uikick-required">*</span></label>
+                                                <input type="text" name="lead_name" placeholder="Nguyễn Văn A"/>
+                                            </div>
+                                            <div class="uikick-lead-field">
+                                                <label>Số điện thoại <span class="uikick-required">*</span></label>
+                                                <input type="tel" name="lead_phone" placeholder="0912 345 678"/>
+                                            </div>
                                         </div>
+                                        <div class="uikick-lead-field">
+                                            <label>Email <span class="uikick-required">*</span></label>
+                                            <input type="email" name="lead_email" placeholder="example@email.com"/>
+                                        </div>
+                                        <div class="uikick-lead-field">
+                                            <label>Ghi chú / Câu hỏi</label>
+                                            <textarea name="lead_note" placeholder="Tôi quan tâm đến sản phẩm này vì..."/>
+                                        </div>
+                                        <button type="button" class="uikick-btn-primary uikick-btn-block">Gửi thông tin</button>
+                                        <p class="uikick-lead-form-note">Thông tin của bạn được bảo mật và chỉ dùng để liên hệ về sản phẩm này.</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="uikick-tab-content" data-tab="Rewards">
-                                <h2 class="uikick-section-title">Rewards</h2>
+                                <h2 class="uikick-section-title">Tính năng</h2>
                                 <div class="uikick-reward-list">
                                     <t t-foreach="reward_tiers" t-as="tier">
                                         <div class="uikick-reward-card">
                                             <div class="uikick-reward-head">
                                                 <div>
-                                                    <div class="uikick-reward-amount">Pledge US$<t t-esc="tier.amount"/></div>
+                                                    <div class="uikick-reward-amount">US$<t t-esc="tier.amount"/></div>
                                                     <div class="uikick-reward-title"><t t-esc="tier.title"/></div>
                                                 </div>
-                                                <button class="uikick-btn-primary uikick-reward-select">Select</button>
+                                                <button class="uikick-btn-primary uikick-reward-select">Chọn</button>
                                             </div>
                                             <p class="uikick-reward-desc"><t t-esc="tier.description"/></p>
                                             <div class="uikick-reward-meta">
-                                                <span>Estimated delivery: <t t-esc="tier.estimated"/></span>
+                                                <span>Dự kiến giao hàng: <t t-esc="tier.estimated"/></span>
                                                 <span>•</span>
-                                                <span><t t-esc="tier.backers"/> backers</span>
+                                                <span><t t-esc="tier.backers"/> người quan tâm</span>
                                                 <t t-if="tier.limited">
                                                     <span>•</span>
-                                                    <span class="uikick-reward-limited">Only <t t-esc="tier.remaining"/> left!</span>
+                                                    <span class="uikick-reward-limited">Chỉ còn <t t-esc="tier.remaining"/>!</span>
                                                 </t>
                                             </div>
                                         </div>
@@ -434,51 +463,42 @@
                                     <div class="uikick-tab-content" t-att-data-tab="tab">
                                         <div class="uikick-tab-placeholder">
                                             <div class="uikick-tab-placeholder-icon">📋</div>
-                                            <p><t t-esc="tab"/> content coming soon.</p>
+                                            <p>Nội dung <t t-esc="tab_labels.get(tab, tab)"/> đang được cập nhật.</p>
                                         </div>
                                     </div>
                                 </t>
                             </t>
                         </main>
 
-                        <!-- Right: creator + funding + support -->
+                        <!-- Right: creator + share -->
                         <aside class="uikick-detail-side">
                             <div class="uikick-creator-card">
                                 <div class="uikick-creator-head">
                                     <div class="uikick-creator-avatar"><t t-esc="(project.creator or '')[:1]"/></div>
                                     <div>
                                         <div class="uikick-creator-name"><t t-esc="project.creator"/></div>
-                                        <div class="uikick-creator-role">Campaign creator</div>
+                                        <div class="uikick-creator-role">Tác giả sản phẩm</div>
                                     </div>
                                 </div>
                                 <div class="uikick-creator-meta">
-                                    <span><t t-esc="project.campaign_number or 1"/> campaigns created</span>
+                                    <span><t t-esc="project.campaign_number or 1"/> sản phẩm đã đăng</span>
                                     <span>•</span>
-                                    <span>6 backed</span>
+                                    <span><t t-esc="project.location"/></span>
                                 </div>
                                 <p class="uikick-creator-bio">
-                                    <t t-esc="project.creator"/> is made up of experienced engineers and designers passionate
-                                    about creating products that surprise and delight.
+                                    <t t-esc="project.creator"/> là đội ngũ kỹ sư và nhà thiết kế đam mê tạo ra những sản phẩm
+                                    khiến bạn phải ngạc nhiên.
                                 </p>
-                                <button class="uikick-link-btn">Contact me</button>
+                                <button class="uikick-link-btn">Liên hệ tác giả</button>
                             </div>
 
                             <div class="uikick-support-box">
-                                <h3>Support</h3>
-                                <button class="uikick-link-btn uikick-support-noreward">Make a pledge without a reward</button>
-                                <label class="uikick-pledge-input-label">Pledge amount</label>
-                                <div class="uikick-pledge-input">
-                                    <span>US$</span>
-                                    <input type="number" name="pledge_amount" placeholder="0"/>
-                                </div>
-                                <div class="uikick-share-block">
-                                    <p>Share this project</p>
-                                    <div class="uikick-share-icons">
-                                        <button type="button">𝕏</button>
-                                        <button type="button">f</button>
-                                        <button type="button">in</button>
-                                        <button type="button">📧</button>
-                                    </div>
+                                <h3>Chia sẻ sản phẩm</h3>
+                                <div class="uikick-share-icons">
+                                    <button type="button" aria-label="Chia sẻ trên X">𝕏</button>
+                                    <button type="button" aria-label="Chia sẻ trên Facebook">f</button>
+                                    <button type="button" aria-label="Chia sẻ trên LinkedIn">in</button>
+                                    <button type="button" aria-label="Chia sẻ qua email">📧</button>
                                 </div>
                             </div>
                         </aside>

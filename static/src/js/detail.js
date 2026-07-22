@@ -51,7 +51,7 @@
             buttons.forEach(function (btn) {
                 btn.classList.toggle("is-reminded", reminded);
                 var label = btn.querySelector(".uikick-remind-label");
-                if (label) label.textContent = reminded ? "Reminded!" : "Remind me";
+                if (label) label.textContent = reminded ? "Đã quan tâm!" : "Để lại thông tin";
             });
         }
 
