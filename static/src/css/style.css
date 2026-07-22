@@ -65,7 +65,7 @@
 .uikick-empty { grid-column: 1 / -1; text-align: center; color: #9ca3af; font-size: 13px; padding: 48px 0; }
 
 /* Grid + cards */
-.uikick-grid { display: grid; gap: 24px 24px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+.uikick-grid { display: grid; gap: 32px 24px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
 .uikick-card { display: block; cursor: pointer; }
 .uikick-card-media { position: relative; overflow: hidden; border-radius: 2px; background: #f3f4f6; aspect-ratio: 16/9; }
 .uikick-card-img, .uikick-card-video {
