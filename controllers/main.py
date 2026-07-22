@@ -102,6 +102,13 @@ class UikickController(http.Controller):
         project = Project.search([('project_code', '=', project_id)], limit=1)
         if not project:
             project = Project.search([('project_code', '=', '5')], limit=1) or Project.search([], limit=1)
+        # Count every detail-page load as a view. Raw SQL avoids a read-then-write
+        # race between concurrent requests for the same project.
+        request.env.cr.execute(
+            "UPDATE uikick_project SET views = views + 1 WHERE id = %s", (project.id,)
+        )
+        project.invalidate_recordset(['views'])
+
         reward_tiers = request.env['uikick.reward.tier'].sudo().search([], order='sequence, id')
         values = {
             'project': project,

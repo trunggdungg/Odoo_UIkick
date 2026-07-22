@@ -30,6 +30,7 @@ class UikickProject(models.Model):
         ('upcoming', 'Upcoming'),
         ('ended', 'Ended'),
     ], string='Status', default='live', required=True)
+    views = fields.Integer(string='Views', default=0, help="Incremented once per detail-page load.")
     campaign_number = fields.Integer(string='Campaign Number')
     total_raised = fields.Char(string='Total Raised (all campaigns)')
     total_backers = fields.Char(string='Total Backers (all campaigns)')
