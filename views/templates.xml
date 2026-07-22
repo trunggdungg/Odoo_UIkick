@@ -7,6 +7,10 @@
     <template id="home_page" name="UIKick - Discover">
         <t t-call="web.layout">
             <t t-set="title" t-value="(active_category or '') + ' Projects — Kickstarter'"/>
+            <t t-set="head">
+                <t t-call-assets="web.assets_frontend" t-js="false"/>
+                <t t-call-assets="web.assets_frontend" t-css="false"/>
+            </t>
             <div id="wrap" class="uikick">
 
                 <!-- Top nav -->
@@ -175,7 +179,7 @@
                                         <div class="uikick-progress">
                                             <div class="uikick-progress-track">
                                                 <div class="uikick-progress-fill"
-                                                     t-att-style="'width:' + str(min(project.percent_funded, 100)) + '%'"/>
+                                                     t-attf-style="width: {{ min(project.percent_funded or 0, 100) }}%;"/>
                                             </div>
                                             <div class="uikick-progress-meta">
                                                 <span class="uikick-progress-pct">
@@ -222,6 +226,10 @@
     <template id="detail_page" name="UIKick - Campaign Detail">
         <t t-call="web.layout">
             <t t-set="title" t-value="(project.title or '') + ' — Kickstarter'"/>
+            <t t-set="head">
+                <t t-call-assets="web.assets_frontend" t-js="false"/>
+                <t t-call-assets="web.assets_frontend" t-css="false"/>
+            </t>
             <div id="wrap" class="uikick uikick-detail">
 
                 <header class="uikick-detail-header">
@@ -306,7 +314,7 @@
                             <div class="uikick-progress">
                                 <div class="uikick-progress-track">
                                     <div class="uikick-progress-fill"
-                                         t-att-style="'width:' + str(min(project.percent_funded, 100)) + '%'"/>
+                                         t-attf-style="width: {{ min(project.percent_funded or 0, 100) }}%;"/>
                                 </div>
                             </div>
                             <div class="uikick-pledge-amount">US$<t t-esc="'{:,}'.format(project.amount_raised)"/></div>
