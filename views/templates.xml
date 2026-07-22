@@ -6,7 +6,7 @@
     <!-- ============================================================ -->
     <template id="home_page" name="UIKick - Discover">
         <t t-call="web.layout">
-            <t t-set="title" t-value="'%s Projects — Kickstarter' % (active_category or '')"/>
+            <t t-set="title" t-value="(active_category or '') + ' Projects — Kickstarter'"/>
             <div id="wrap" class="uikick">
 
                 <!-- Top nav -->
@@ -36,7 +36,7 @@
                     <div class="uikick-category-nav">
                         <nav>
                             <t t-foreach="categories" t-as="cat">
-                                <a t-att-href="'/uikick/category/%s' % cat" class="uikick-cat-link"
+                                <a t-att-href="'/uikick/category/' + cat" class="uikick-cat-link"
                                    t-att-class="'uikick-cat-link active' if cat == active_category else 'uikick-cat-link'">
                                     <t t-esc="cat"/>
                                 </a>
@@ -156,7 +156,7 @@
 
                         <div class="uikick-grid">
                             <t t-foreach="projects" t-as="project">
-                                <a t-att-href="'/uikick/project/%s' % project.project_code" class="uikick-card">
+                                <a t-att-href="'/uikick/project/' + project.project_code" class="uikick-card">
                                     <div class="uikick-card-media">
                                         <img t-att-src="project.image" t-att-alt="project.title"
                                              class="uikick-card-img"/>
@@ -175,7 +175,7 @@
                                         <div class="uikick-progress">
                                             <div class="uikick-progress-track">
                                                 <div class="uikick-progress-fill"
-                                                     t-att-style="'width:%s%%' % min(project.percent_funded, 100)"/>
+                                                     t-att-style="'width:' + str(min(project.percent_funded, 100)) + '%'"/>
                                             </div>
                                             <div class="uikick-progress-meta">
                                                 <span class="uikick-progress-pct">
@@ -221,7 +221,7 @@
     <!-- ============================================================ -->
     <template id="detail_page" name="UIKick - Campaign Detail">
         <t t-call="web.layout">
-            <t t-set="title" t-value="'%s — Kickstarter' % (project.title or '')"/>
+            <t t-set="title" t-value="(project.title or '') + ' — Kickstarter'"/>
             <div id="wrap" class="uikick uikick-detail">
 
                 <header class="uikick-detail-header">
@@ -269,7 +269,7 @@
                                 <div class="uikick-hero-text-overlay">
                                     <t t-if="project.campaign_number">
                                         <div class="uikick-hero-campaign-num">
-                                            OUR <t t-esc="'%sTH' % project.campaign_number"/><br/>CAMPAIGN.
+                                            OUR <t t-esc="str(project.campaign_number) + 'TH'"/><br/>CAMPAIGN.
                                         </div>
                                     </t>
                                     <t t-if="project.total_raised">
@@ -306,7 +306,7 @@
                             <div class="uikick-progress">
                                 <div class="uikick-progress-track">
                                     <div class="uikick-progress-fill"
-                                         t-att-style="'width:%s%%' % min(project.percent_funded, 100)"/>
+                                         t-att-style="'width:' + str(min(project.percent_funded, 100)) + '%'"/>
                                 </div>
                             </div>
                             <div class="uikick-pledge-amount">US$<t t-esc="'{:,}'.format(project.amount_raised)"/></div>
