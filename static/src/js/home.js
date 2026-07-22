@@ -28,23 +28,29 @@
         var form = document.getElementById("uikick-filter-form");
         if (!form) return;
         form.querySelectorAll("input[type=checkbox], input[type=radio]").forEach(function (input) {
-            input.addEventListener("change", function () {
-                form.submit();
-            });
+            input.addEventListener("change", function () { form.submit(); });
         });
         var sortSelect = document.getElementById("uikick-sort-select");
         if (sortSelect) {
-            sortSelect.addEventListener("change", function () {
-                form.submit();
-            });
+            sortSelect.addEventListener("change", function () { form.submit(); });
         }
     }
 
     function preserveFiltersOnCategoryLinks() {
         var query = window.location.search;
         if (!query) return;
-        document.querySelectorAll(".uikick-cat-link").forEach(function (link) {
+        document.querySelectorAll(".uikick-cat-item").forEach(function (link) {
             link.href = link.getAttribute("href") + query;
+        });
+    }
+
+    function initMobileFilterToggle() {
+        var toggle = document.getElementById("uikick-filter-toggle");
+        var sidebar = document.getElementById("uikick-filter-form");
+        if (!toggle || !sidebar) return;
+        toggle.addEventListener("click", function () {
+            var isOpen = sidebar.classList.toggle("is-open");
+            toggle.classList.toggle("is-open", isOpen);
         });
     }
 
@@ -53,5 +59,6 @@
         initCardVideos();
         initFilterForm();
         preserveFiltersOnCategoryLinks();
+        initMobileFilterToggle();
     });
 })();

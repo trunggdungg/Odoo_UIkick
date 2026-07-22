@@ -1,37 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
     <!-- ============================================================ -->
     <!-- HOME PAGE (danh sách project + sidebar filter)                -->
     <!-- ============================================================ -->
     <template id="home_page" name="UIKick - Discover">
         <t t-call="web.frontend_layout">
+            <t t-set="title" t-value="(active_category or '') + ' Projects — Kickstarter'"/>
             <div id="wrap" class="uikick">
+
                 <div class="uikick-body">
                     <!-- Sidebar filters -->
-                    <aside class="uikick-sidebar">
+                    <button type="button" id="uikick-filter-toggle" class="uikick-filter-toggle">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12h12M3 6h18M9 18h6"/>
+                        </svg>
+                        Filter by
+                        <svg class="uikick-filter-toggle-chevron" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <form method="get" id="uikick-filter-form" class="uikick-sidebar">
                         <p class="uikick-sidebar-title">Filter by</p>
+
+                        <div class="uikick-filter-group">
+                            <h3>Category</h3>
+                            <div class="uikick-category-list">
+                                <t t-foreach="categories" t-as="cat">
+                                    <a t-att-href="'/uikick/category/' + cat"
+                                       t-att-class="'uikick-cat-item active' if cat == active_category else 'uikick-cat-item'">
+                                        <t t-esc="cat"/>
+                                    </a>
+                                </t>
+                            </div>
+                        </div>
+
+                        <hr/>
+
                         <div class="uikick-filter-group">
                             <h3>Project status</h3>
                             <label class="uikick-check-row">
-                                <span><input type="checkbox" id="filter-upcoming"/> Upcoming</span>
+                                <span>
+                                    <input type="checkbox" name="status" value="upcoming"
+                                           t-att-checked="'checked' if 'upcoming' in filters['status'] else None"/>
+                                    Upcoming
+                                </span>
                                 <span class="uikick-count">10,285</span>
                             </label>
                             <label class="uikick-check-row">
-                                <span><input type="checkbox" id="filter-live" checked="checked"/> Live</span>
+                                <span>
+                                    <input type="checkbox" name="status" value="live"
+                                           t-att-checked="'checked' if 'live' in filters['status'] else None"/>
+                                    Live
+                                </span>
                                 <span class="uikick-count">2,933</span>
                             </label>
+                            <!-- "Late pledge"/"Include ended" have no matching status value in uikick.project yet,
+                                 so they stay decorative like in the original React mock. -->
                             <label class="uikick-check-row">
-                                <span><input type="checkbox" id="filter-late"/> Late pledge</span>
+                                <span><input type="checkbox" name="late_pledge" value="1"/> Late pledge</span>
                                 <span class="uikick-count">4,731</span>
                             </label>
                             <label class="uikick-check-row uikick-check-row-single">
-                                <input type="checkbox" id="filter-ended"/> Include ended projects
+                                <input type="checkbox" name="include_ended" value="1"/> Include ended projects
                             </label>
                         </div>
+
                         <hr/>
+
                         <div class="uikick-filter-group">
                             <h3>Location</h3>
-                            <input type="text" placeholder="Search by city, state, country..." class="uikick-input"/>
+                            <input type="text" name="location" placeholder="Search by city, state, country..."
+                                   class="uikick-input" t-att-value="filters['location']"/>
                             <select class="uikick-select">
                                 <option>Anywhere</option>
                                 <option>Vietnam</option>
@@ -41,34 +81,47 @@
                                 <option>Canada</option>
                             </select>
                         </div>
+
                         <hr/>
+
                         <div class="uikick-filter-group">
                             <h3>Goal</h3>
                             <label class="uikick-radio-row">
-                                <input type="radio" name="goal"/> Under $1,000
+                                <input type="radio" name="goal" value="under_1000"
+                                       t-att-checked="'checked' if filters['goal'] == 'under_1000' else None"/>
+                                Under $1,000
                             </label>
                             <label class="uikick-radio-row">
-                                <input type="radio" name="goal"/> $1,000 to $10,000
+                                <input type="radio" name="goal" value="1000_10000"
+                                       t-att-checked="'checked' if filters['goal'] == '1000_10000' else None"/>
+                                $1,000 to $10,000
                             </label>
                             <label class="uikick-radio-row">
-                                <input type="radio" name="goal"/> $10,000 to $100,000
+                                <input type="radio" name="goal" value="10000_100000"
+                                       t-att-checked="'checked' if filters['goal'] == '10000_100000' else None"/>
+                                $10,000 to $100,000
                             </label>
                         </div>
+
                         <hr/>
+
                         <div class="uikick-filter-group">
                             <h3>Amount raised</h3>
                             <div class="uikick-amount-row">
                                 <div class="uikick-amount-field">
                                     <span>$</span>
-                                    <input type="number" placeholder="Min"/>
+                                    <input type="number" name="amount_min" placeholder="Min" t-att-value="filters['amount_min']"/>
                                 </div>
                                 <div class="uikick-amount-field">
                                     <span>$</span>
-                                    <input type="number" placeholder="Max"/>
+                                    <input type="number" name="amount_max" placeholder="Max" t-att-value="filters['amount_max']"/>
                                 </div>
                             </div>
                         </div>
-                    </aside>
+
+                        <button type="submit" class="uikick-btn-primary uikick-btn-block uikick-filter-apply">Apply filters</button>
+                    </form>
+
                     <!-- Main content -->
                     <main class="uikick-main">
                         <div class="uikick-main-header">
@@ -78,63 +131,69 @@
                             </div>
                             <div class="uikick-sort">
                                 <span>Sort by</span>
-                                <select class="uikick-select">
-                                    <option>Relevance</option>
-                                    <option>Most funded</option>
-                                    <option>Most backed</option>
-                                    <option>Newest</option>
-                                    <option>End date</option>
+                                <select class="uikick-select" id="uikick-sort-select" name="sort" form="uikick-filter-form">
+                                    <t t-foreach="sort_options" t-as="opt">
+                                        <option t-att-value="opt" t-att-selected="'selected' if filters['sort'] == opt else None">
+                                            <t t-esc="opt"/>
+                                        </option>
+                                    </t>
                                 </select>
                             </div>
                         </div>
+
                         <div class="uikick-grid">
                             <t t-foreach="projects" t-as="project">
-                                <a t-attr-href="'/uikick/project/%s' % project['id']" class="uikick-card">
+                                <a t-att-href="'/uikick/project/' + project.project_code" class="uikick-card">
                                     <div class="uikick-card-media">
-                                        <img t-att-src="project['image']" t-att-alt="project['title']"
+                                        <img t-att-src="project.image" t-att-alt="project.title"
                                              class="uikick-card-img"/>
-                                        <video t-att-src="project['video_url']" muted="muted" loop="loop"
+                                        <video t-att-src="project.video_url" muted="muted" loop="loop"
                                                playsinline="playsinline" preload="metadata"
                                                class="uikick-card-video"/>
-                                        <t t-if="project['status'] == 'upcoming'">
+                                        <t t-if="project.status == 'upcoming'">
                                             <span class="uikick-badge">Upcoming</span>
                                         </t>
                                     </div>
                                     <div class="uikick-card-body">
-                                        <p class="uikick-card-category"><t t-esc="project['category']"/></p>
-                                        <h3 class="uikick-card-title"><t t-esc="project['title']"/></h3>
-                                        <p class="uikick-card-creator">by <span><t t-esc="project['creator']"/></span></p>
+                                        <p class="uikick-card-category"><t t-esc="project.category"/></p>
+                                        <h3 class="uikick-card-title"><t t-esc="project.title"/></h3>
+                                        <p class="uikick-card-creator">by <span><t t-esc="project.creator"/></span></p>
+
                                         <div class="uikick-progress">
                                             <div class="uikick-progress-track">
                                                 <div class="uikick-progress-fill"
-                                                     t-attr-style="'width:%s%%' % min(project['percent_funded'], 100)"/>
+                                                     t-attf-style="width: {{ min(project.percent_funded or 0, 100) }}%;"/>
                                             </div>
                                             <div class="uikick-progress-meta">
                                                 <span class="uikick-progress-pct">
-                                                    <t t-if="project['percent_funded'] &gt;= 100">
-                                                        <t t-esc="project['percent_funded']"/>% funded
+                                                    <t t-if="project.percent_funded &gt;= 100">
+                                                        <t t-esc="project.percent_funded"/>% funded
                                                     </t>
                                                     <t t-else="">
-                                                        <t t-esc="project['percent_funded']"/>% of goal
+                                                        <t t-esc="project.percent_funded"/>% of goal
                                                     </t>
                                                 </span>
                                                 <span class="uikick-progress-days">
-                                                    <t t-if="project['days_left'] &gt; 0">
-                                                        <t t-esc="project['days_left']"/> days left
+                                                    <t t-if="project.days_left &gt; 0">
+                                                        <t t-esc="project.days_left"/> days left
                                                     </t>
                                                     <t t-else="">Ended</t>
                                                 </span>
                                             </div>
                                         </div>
+
                                         <div class="uikick-card-location">
                                             <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
                                                       d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"/>
                                             </svg>
-                                            <span><t t-esc="project['location']"/></span>
+                                            <span><t t-esc="project.location"/></span>
                                         </div>
                                     </div>
                                 </a>
+                            </t>
+                            <t t-if="not projects">
+                                <p class="uikick-empty">No projects match these filters.</p>
                             </t>
                         </div>
                     </main>
@@ -142,65 +201,126 @@
             </div>
         </t>
     </template>
+
+
     <!-- ============================================================ -->
     <!-- DETAIL PAGE (chi tiết chiến dịch)                             -->
     <!-- ============================================================ -->
     <template id="detail_page" name="UIKick - Campaign Detail">
         <t t-call="web.frontend_layout">
+            <t t-set="title" t-value="(project.title or '') + ' — Kickstarter'"/>
             <div id="wrap" class="uikick uikick-detail">
-                <!-- Hero -->
+
+                <!-- Breadcrumb -->
+                <nav class="uikick-breadcrumb">
+                    <div class="uikick-container">
+                        <a href="/uikick">Discover</a>
+                        <span class="uikick-breadcrumb-sep">›</span>
+<!--                        <a t-att-href="'/uikick/category/' + project.category"><t t-esc="project.category"/></a>-->
+<!--                        <span class="uikick-breadcrumb-sep">›</span>-->
+                        <span class="uikick-breadcrumb-current"><t t-esc="project.title"/></span>
+                    </div>
+                </nav>
+
+                <!-- Hero title -->
                 <div class="uikick-detail-hero">
                     <div class="uikick-container">
-                        <h1><t t-esc="project['title']"/></h1>
-                        <p class="uikick-detail-desc"><t t-esc="project['description']"/></p>
-                        <div class="uikick-stats-row">
-                            <div class="uikick-stat">
-                                <div class="uikick-stat-value">US$<t t-esc="'{:,}'.format(project['amount_raised'])"/></div>
-                                <div class="uikick-stat-label">pledged of US$<t t-esc="'{:,}'.format(project['goal'])"/> goal</div>
-                            </div>
-                            <div class="uikick-stat-divider"/>
-                            <div class="uikick-stat">
-                                <div class="uikick-stat-value"><t t-esc="'{:,}'.format(project['backers'])"/></div>
-                                <div class="uikick-stat-label">backers</div>
-                            </div>
-                            <div class="uikick-stat-divider"/>
-                            <div class="uikick-stat">
-                                <div class="uikick-stat-value"><t t-esc="project['days_left']"/></div>
-                                <div class="uikick-stat-label">days to go</div>
-                            </div>
-                        </div>
+                        <h1><t t-esc="project.title"/></h1>
+                        <p class="uikick-detail-desc"><t t-esc="project.description"/></p>
                     </div>
                 </div>
-                 <!-- Hero media (sits above the trust banner, matching real Kickstarter campaign pages) -->
+
+                <!-- Hero media: video (left) + pledge sidebar (right), matching real Kickstarter campaign pages -->
                 <div class="uikick-hero-media">
-                    <div class="uikick-container">
-                        <div class="uikick-hero-video" id="uikick-hero-video">
-                            <video t-att-src="project.video_url" muted="muted" loop="loop" playsinline="playsinline"
-                                   class="uikick-hero-video-el"/>
-                            <div class="uikick-hero-play-overlay">
-                                <div class="uikick-hero-play-circle">
-                                    <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    <div class="uikick-container uikick-hero-row">
+                        <div class="uikick-hero-video-col">
+                            <div class="uikick-hero-video" id="uikick-hero-video">
+                                <video t-att-src="project.video_url" muted="muted" loop="loop" playsinline="playsinline"
+                                       class="uikick-hero-video-el"/>
+                                <div class="uikick-hero-play-overlay">
+                                    <div class="uikick-hero-play-circle">
+                                        <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                    </div>
+                                </div>
+                                <div class="uikick-hero-pause-overlay">
+                                    <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                                </div>
+                                <div class="uikick-hero-text-overlay">
+                                    <t t-if="project.campaign_number">
+                                        <div class="uikick-hero-campaign-num">
+                                            OUR <t t-esc="str(project.campaign_number) + 'TH'"/><br/>CAMPAIGN.
+                                        </div>
+                                    </t>
+                                    <t t-if="project.total_raised">
+                                        <div class="uikick-hero-total">
+                                            <t t-esc="project.total_raised"/> raised &amp; <t t-esc="project.total_backers"/> backers.
+                                        </div>
+                                    </t>
                                 </div>
                             </div>
-                            <div class="uikick-hero-pause-overlay">
-                                <svg width="14" height="14" fill="white" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-                            </div>
-                            <div class="uikick-hero-text-overlay">
-                                <t t-if="project.campaign_number">
-                                    <div class="uikick-hero-campaign-num">
-                                        OUR <t t-esc="'%sTH' % project.campaign_number"/><br/>CAMPAIGN.
-                                    </div>
-                                </t>
-                                <t t-if="project.total_raised">
-                                    <div class="uikick-hero-total">
-                                        <t t-esc="project.total_raised"/> raised &amp; <t t-esc="project.total_backers"/> backers.
-                                    </div>
-                                </t>
+                            <div class="uikick-hero-tags">
+                                <span class="uikick-hero-tag">
+                                    <svg width="14" height="14" fill="none" stroke="#05ce78" stroke-width="1.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+                                    </svg>
+                                    Project We Love
+                                </span>
+                                <span class="uikick-hero-tag">
+                                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447 2.724A1 1 0 013 21.882V6.618a1 1 0 01.553-.894L9 3m0 17l6 3m-6-3V3m6 17l5.447 2.724A1 1 0 0021 21.882V6.618a1 1 0 00-.553-.894L15 3m0 17V3m0 0L9 3"/>
+                                    </svg>
+                                    <t t-esc="project.category"/>
+                                </span>
+                                <span class="uikick-hero-tag">
+                                    <svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                              d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"/>
+                                    </svg>
+                                    <t t-esc="project.location"/>
+                                </span>
                             </div>
                         </div>
+
+                        <aside class="uikick-hero-pledge">
+                            <div class="uikick-progress">
+                                <div class="uikick-progress-track">
+                                    <div class="uikick-progress-fill"
+                                         t-attf-style="width: {{ min(project.percent_funded or 0, 100) }}%;"/>
+                                </div>
+                            </div>
+                            <div class="uikick-pledge-amount">US$<t t-esc="'{:,}'.format(project.amount_raised)"/></div>
+                            <p class="uikick-pledge-goal">pledged of US$<t t-esc="'{:,}'.format(project.goal)"/> goal</p>
+                            <div class="uikick-hero-pledge-stats">
+                                <div class="uikick-hero-pledge-stat">
+                                    <div class="uikick-pledge-stat-value"><t t-esc="'{:,}'.format(project.backers)"/></div>
+                                    <div class="uikick-pledge-stat-label">backers</div>
+                                </div>
+                                <div class="uikick-hero-pledge-stat">
+                                    <div class="uikick-pledge-stat-value"><t t-esc="project.days_left"/></div>
+                                    <div class="uikick-pledge-stat-label">days to go</div>
+                                </div>
+                            </div>
+                            <button class="uikick-btn-primary uikick-btn-block">Back this project</button>
+                            <div class="uikick-hero-secondary-row">
+                                <button type="button" class="uikick-btn-outline uikick-remind-btn">
+                                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/>
+                                    </svg>
+                                    <span class="uikick-remind-label">Remind me</span>
+                                </button>
+                                <div class="uikick-hero-share-row">
+                                    <button type="button" aria-label="Share on X">𝕏</button>
+                                    <button type="button" aria-label="Share on Facebook">f</button>
+                                    <button type="button" aria-label="Share on LinkedIn">in</button>
+                                    <button type="button" aria-label="Share by email">📧</button>
+                                </div>
+                            </div>
+                            <p class="uikick-all-or-nothing"><strong>All or nothing.</strong> This project will only be funded if it reaches its goal by the campaign deadline.</p>
+                        </aside>
                     </div>
                 </div>
-                 <!-- Platform info banner -->
+
+                <!-- Platform info banner -->
                 <div class="uikick-info-banner">
                     <div class="uikick-container uikick-info-grid">
                         <div class="uikick-info-item">
@@ -230,74 +350,175 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="uikick-container uikick-detail-body">
                     <!-- Tabs -->
-                    <nav class="uikick-tabs" id="uikick-tabs">
-                        <t t-foreach="tabs" t-as="tab">
-                            <a href="#" t-att-data-tab="tab"
-                               t-attr-class="'uikick-tab active' if tab_index == 0 else 'uikick-tab'">
-                                <t t-esc="tab"/>
-                            </a>
-                        </t>
-                    </nav>
-                    <div class="uikick-detail-columns">
-                        <!-- Left: campaign content + TOC -->
-                        <div class="uikick-detail-main">
-                            <div class="uikick-toc">
-                                <h3>Table of contents</h3>
-                                <ul>
-                                    <t t-foreach="toc_items" t-as="item">
-                                        <li><a t-attr-href="'#toc-%s' % item_index"><t t-esc="item"/></a></li>
-                                    </t>
-                                </ul>
-                            </div>
-                            <div class="uikick-media-hero">
-                                <video t-att-src="project['video_url']" controls="controls"
-                                       class="uikick-media-hero-video"/>
-                            </div>
-                            <t t-foreach="toc_items" t-as="item">
-                                <section t-attr-id="'toc-%s' % item_index" class="uikick-content-section">
-                                    <h2><t t-esc="item"/></h2>
-                                    <p>Nội dung chi tiết cho mục "<t t-esc="item"/>" của chiến dịch sẽ được biên tập
-                                        tại đây — hình ảnh, mô tả kỹ thuật, thông số sản phẩm...</p>
-                                </section>
+                    <div class="uikick-tabs-row">
+                        <nav class="uikick-tabs" id="uikick-tabs">
+                            <t t-foreach="tabs" t-as="tab">
+                                <a href="#" t-att-data-tab="tab"
+                                   t-att-class="'uikick-tab active' if tab_index == 0 else 'uikick-tab'">
+                                    <t t-esc="tab"/>
+                                    <t t-if="tab == 'Comments'"><span class="uikick-tab-count">70</span></t>
+                                </a>
                             </t>
+                        </nav>
+                        <div class="uikick-tabs-actions">
+                            <button class="uikick-btn-primary">Back this project</button>
+                            <button type="button" class="uikick-btn-outline uikick-remind-btn">
+                                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/>
+                                </svg>
+                                <span class="uikick-remind-label">Remind me</span>
+                            </button>
                         </div>
-                        <!-- Right: pledge box + reward tiers -->
-                        <aside class="uikick-detail-side">
-                            <div class="uikick-pledge-box">
-                                <div class="uikick-progress">
-                                    <div class="uikick-progress-track">
-                                        <div class="uikick-progress-fill"
-                                             t-attr-style="'width:%s%%' % min(project['percent_funded'], 100)"/>
+                    </div>
+
+                    <div class="uikick-detail-columns">
+                        <!-- Left: TOC (decorative, matches the source React mock 1:1) -->
+                        <aside class="uikick-toc-sidebar">
+                            <nav>
+                                <t t-foreach="toc_items" t-as="item">
+                                    <span class="uikick-toc-item"><t t-esc="item"/></span>
+                                </t>
+                            </nav>
+                        </aside>
+
+                        <!-- Center: tab content -->
+                        <main class="uikick-detail-main">
+                            <div class="uikick-tab-content active" data-tab="Campaign">
+                                <h2 class="uikick-section-title">Story</h2>
+
+                                <div class="uikick-story-text">
+                                    <p>
+                                        After <t t-esc="project.campaign_number or 1"/> successful campaigns and over
+                                        <t t-esc="project.total_raised or ('$' + '{:,}'.format(project.amount_raised))"/> raised from
+                                        <t t-esc="project.total_backers or '{:,}'.format(project.backers)"/> backers worldwide,
+                                        we're back with our most ambitious product yet.
+                                    </p>
+                                    <p>
+                                        The <strong><t t-esc="(project.title or '').split('|')[0].strip()"/></strong> combines
+                                        cutting-edge engineering with maximum portability. Every detail has been refined based on
+                                        backer feedback from our previous campaigns.
+                                    </p>
+
+                                    <div class="uikick-feature-box">
+                                        <h3>Key Features</h3>
+                                        <div class="uikick-feature-grid">
+                                            <t t-foreach="(project.description or '').split('|')" t-as="feat">
+                                                <t t-if="feat.strip()">
+                                                    <div class="uikick-feature-item">
+                                                        <span class="uikick-feature-check">✓</span>
+                                                        <span><t t-esc="feat.strip()"/></span>
+                                                    </div>
+                                                </t>
+                                            </t>
+                                        </div>
+                                    </div>
+
+                                    <p>
+                                        We're committed to making this the best version yet. Our engineering team has spent
+                                        over 18 months perfecting the thermal management system, resulting in a 40% improvement
+                                        in cooling efficiency over the previous generation.
+                                    </p>
+                                    <p>
+                                        With your backing, we'll bring this to life and ship to backers worldwide. Join
+                                        thousands of early supporters already committed to making this happen.
+                                    </p>
+
+                                    <div class="uikick-milestone-box">
+                                        <div class="uikick-milestone-pct"><t t-esc="project.percent_funded"/>% FUNDED</div>
+                                        <div class="uikick-milestone-meta">
+                                            <t t-esc="'{:,}'.format(project.backers)"/> backers — <t t-esc="project.days_left"/> days remaining
+                                        </div>
                                     </div>
                                 </div>
-                                <p class="uikick-pledge-pct"><t t-esc="project['percent_funded']"/>% funded</p>
-                                <div class="uikick-pledge-actions">
-                                    <button class="uikick-btn-primary uikick-btn-block">Back this project</button>
-                                    <button class="uikick-btn-outline uikick-btn-block">Remind me</button>
+                            </div>
+
+                            <div class="uikick-tab-content" data-tab="Rewards">
+                                <h2 class="uikick-section-title">Rewards</h2>
+                                <div class="uikick-reward-list">
+                                    <t t-foreach="reward_tiers" t-as="tier">
+                                        <div class="uikick-reward-card">
+                                            <div class="uikick-reward-head">
+                                                <div>
+                                                    <div class="uikick-reward-amount">Pledge US$<t t-esc="tier.amount"/></div>
+                                                    <div class="uikick-reward-title"><t t-esc="tier.title"/></div>
+                                                </div>
+                                                <button class="uikick-btn-primary uikick-reward-select">Select</button>
+                                            </div>
+                                            <p class="uikick-reward-desc"><t t-esc="tier.description"/></p>
+                                            <div class="uikick-reward-meta">
+                                                <span>Estimated delivery: <t t-esc="tier.estimated"/></span>
+                                                <span>•</span>
+                                                <span><t t-esc="tier.backers"/> backers</span>
+                                                <t t-if="tier.limited">
+                                                    <span>•</span>
+                                                    <span class="uikick-reward-limited">Only <t t-esc="tier.remaining"/> left!</span>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </t>
                                 </div>
                             </div>
-                            <h3 class="uikick-rewards-title">Rewards</h3>
-                            <t t-foreach="reward_tiers" t-as="tier">
-                                <div class="uikick-reward-card">
-                                    <div class="uikick-reward-amount">US$<t t-esc="tier['amount']"/></div>
-                                    <div class="uikick-reward-title"><t t-esc="tier['title']"/></div>
-                                    <p class="uikick-reward-desc"><t t-esc="tier['description']"/></p>
-                                    <p class="uikick-reward-meta">
-                                        <t t-esc="tier['backers']"/> backers
-                                        <t t-if="tier['limited']">
-                                            · <t t-esc="tier['remaining']"/> left
-                                        </t>
-                                    </p>
-                                    <p class="uikick-reward-est">Estimated delivery <t t-esc="tier['estimated']"/></p>
-                                    <button class="uikick-btn-outline uikick-btn-block">Select</button>
-                                </div>
+
+                            <t t-foreach="tabs" t-as="tab">
+                                <t t-if="tab not in ('Campaign', 'Rewards')">
+                                    <div class="uikick-tab-content" t-att-data-tab="tab">
+                                        <div class="uikick-tab-placeholder">
+                                            <div class="uikick-tab-placeholder-icon">📋</div>
+                                            <p><t t-esc="tab"/> content coming soon.</p>
+                                        </div>
+                                    </div>
+                                </t>
                             </t>
+                        </main>
+
+                        <!-- Right: creator + funding + support -->
+                        <aside class="uikick-detail-side">
+                            <div class="uikick-creator-card">
+                                <div class="uikick-creator-head">
+                                    <div class="uikick-creator-avatar"><t t-esc="(project.creator or '')[:1]"/></div>
+                                    <div>
+                                        <div class="uikick-creator-name"><t t-esc="project.creator"/></div>
+                                        <div class="uikick-creator-role">Campaign creator</div>
+                                    </div>
+                                </div>
+                                <div class="uikick-creator-meta">
+                                    <span><t t-esc="project.campaign_number or 1"/> campaigns created</span>
+                                    <span>•</span>
+                                    <span>6 backed</span>
+                                </div>
+                                <p class="uikick-creator-bio">
+                                    <t t-esc="project.creator"/> is made up of experienced engineers and designers passionate
+                                    about creating products that surprise and delight.
+                                </p>
+                                <button class="uikick-link-btn">Contact me</button>
+                            </div>
+
+                            <div class="uikick-support-box">
+                                <h3>Support</h3>
+                                <button class="uikick-link-btn uikick-support-noreward">Make a pledge without a reward</button>
+                                <label class="uikick-pledge-input-label">Pledge amount</label>
+                                <div class="uikick-pledge-input">
+                                    <span>US$</span>
+                                    <input type="number" name="pledge_amount" placeholder="0"/>
+                                </div>
+                                <div class="uikick-share-block">
+                                    <p>Share this project</p>
+                                    <div class="uikick-share-icons">
+                                        <button type="button">𝕏</button>
+                                        <button type="button">f</button>
+                                        <button type="button">in</button>
+                                        <button type="button">📧</button>
+                                    </div>
+                                </div>
+                            </div>
                         </aside>
                     </div>
                 </div>
             </div>
         </t>
     </template>
+
 </odoo>

@@ -8,35 +8,17 @@
 .uikick hr { border: none; border-top: 1px solid #f0f0f0; margin: 20px 0; }
 .uikick button { font-family: inherit; }
 
-/* ==== Header ==== */
-.uikick-header, .uikick-detail-header {
-    background: #1a1a1a;
-    color: #fff;
-}
-.uikick-header-top, .uikick-detail-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 24px;
-}
-.uikick-header-left { display: flex; align-items: center; gap: 32px; }
-.uikick-logo { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; }
-.uikick-main-nav { display: flex; align-items: center; gap: 24px; font-size: 13px; color: #9ca3af; }
-.uikick-main-nav a:hover { color: #fff; }
-.uikick-header-right { display: flex; align-items: center; gap: 16px; font-size: 13px; color: #9ca3af; }
-
-.uikick-btn-link { background: none; border: none; color: #9ca3af; cursor: pointer; font-size: 13px; }
-.uikick-btn-link:hover { color: #fff; }
+/* ==== Buttons ==== */
 .uikick-btn-primary {
     background: #05ce78; color: #000; border: none; border-radius: 999px;
     padding: 6px 16px; font-size: 12px; font-weight: 600; cursor: pointer;
 }
 .uikick-btn-primary:hover { background: #04b86c; }
 .uikick-btn-outline {
-    background: none; border: 1px solid #6b7280; color: #d1d5db; border-radius: 6px;
+    background: none; border: 1px solid #6b7280; color: #374151; border-radius: 6px;
     padding: 6px 12px; font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
-
 }
+.uikick-btn-outline:hover { color: #111827; border-color: #9ca3af; }
 .uikick-btn-block { width: 100%; margin-bottom: 8px; padding: 10px; justify-content: center; }
 .uikick-btn-lg { padding: 10px 24px; border-radius: 6px; font-size: 13px; }
 
@@ -47,25 +29,19 @@
 .uikick-icon-btn:hover { color: #374151; border-color: #d1d5db; }
 
 .uikick-remind-btn.is-reminded { border-color: #05ce78; color: #05ce78; background: #ecfdf5; }
-.uikick-btn-block { width: 100%; margin-bottom: 8px; padding: 10px; }
-
-/* Category nav */
-.uikick-category-nav { border-top: 1px solid rgba(255,255,255,0.1); padding: 0 24px; overflow-x: auto; }
-.uikick-category-nav nav { display: flex; white-space: nowrap; }
-.uikick-cat-link {
-    padding: 12px 16px; font-size: 12px; color: #9ca3af; border-bottom: 2px solid transparent;
-}
-.uikick-cat-link:hover { color: #fff; }
-.uikick-cat-link.active { color: #fff; font-weight: 500; border-bottom-color: #05ce78; }
 
 /* ==== Body layout ==== */
-.uikick-body { display: flex; }
+.uikick-body { display: flex; max-width: 1320px; margin: 0 auto; padding: 0 32px; }
 .uikick-sidebar {
     width: 224px; flex-shrink: 0; border-right: 1px solid #e5e7eb;
-    padding: 24px 20px; min-height: 100vh; margin: 0;
+    padding: 24px 24px 24px 32px; min-height: 100vh; margin: 0;
 }
 .uikick-sidebar-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 16px; }
 .uikick-filter-group h3 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: #6b7280; margin-bottom: 12px; }
+.uikick-category-list { display: flex; flex-direction: column; gap: 2px; max-height: 260px; overflow-y: auto; }
+.uikick-cat-item { font-size: 13px; color: #374151; padding: 5px 6px; border-radius: 4px; }
+.uikick-cat-item:hover { background: #f3f4f6; }
+.uikick-cat-item.active { background: #ecfdf5; color: #05ce78; font-weight: 600; }
 .uikick-check-row { display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: #374151; margin-bottom: 8px; cursor: pointer; }
 .uikick-check-row-single { justify-content: flex-start; gap: 8px; }
 .uikick-count { font-size: 11px; color: #9ca3af; }
@@ -89,7 +65,7 @@
 .uikick-empty { grid-column: 1 / -1; text-align: center; color: #9ca3af; font-size: 13px; padding: 48px 0; }
 
 /* Grid + cards */
-.uikick-grid { display: grid; gap: 24px 24px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+.uikick-grid { display: grid; gap: 32px 24px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
 .uikick-card { display: block; cursor: pointer; }
 .uikick-card-media { position: relative; overflow: hidden; border-radius: 2px; background: #f3f4f6; aspect-ratio: 16/9; }
 .uikick-card-img, .uikick-card-video {
@@ -124,20 +100,39 @@
 .uikick-card-location span { font-size: 12px; }
 
 /* ==== Detail page ==== */
-.uikick-detail-hero { border-bottom: 1px solid #e5e7eb; padding: 24px 40px; }
 .uikick-container { max-width: 1152px; margin: 0 auto; }
+.uikick-breadcrumb { padding: 16px 40px 0; font-size: 12px; color: #9ca3af; }
+.uikick-breadcrumb a { color: #6b7280; }
+.uikick-breadcrumb a:hover { color: #05ce78; text-decoration: underline; }
+.uikick-breadcrumb-sep { margin: 0 6px; color: #d1d5db; }
+.uikick-breadcrumb-current {
+    color: #374151; display: inline-block; max-width: 360px; vertical-align: bottom;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.uikick-detail-hero { padding: 12px 40px 0; }
 .uikick-detail-hero h1 { font-size: 20px; font-weight: 700; margin: 0 0 4px; }
-.uikick-detail-desc { font-size: 13px; color: #6b7280; max-width: 720px; margin: 0 0 20px; line-height: 1.6; }
-.uikick-stats-row { display: flex; align-items: center; flex-wrap: wrap; gap: 32px; }
-.uikick-stat-value { font-size: 22px; font-weight: 700; }
-.uikick-stat-label { font-size: 12px; color: #6b7280; margin-top: 2px; }
-.uikick-stat-divider { width: 1px; height: 32px; background: #e5e7eb; }
-.uikick-hero-actions { display: flex; align-items: center; gap: 12px; margin-left: 16px; }
+.uikick-detail-desc { font-size: 13px; color: #6b7280; max-width: 720px; margin: 0; line-height: 1.6; }
 
+.uikick-hero-media { padding: 20px 40px 32px; border-bottom: 1px solid #e5e7eb; }
+.uikick-hero-row { display: flex; gap: 32px; align-items: flex-start; }
+.uikick-hero-video-col { flex: 1; min-width: 0; }
+.uikick-hero-media .uikick-hero-video { margin-bottom: 16px; }
+.uikick-hero-tags { display: flex; flex-wrap: wrap; gap: 20px; }
+.uikick-hero-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: #4b5563; }
+.uikick-hero-tag svg { flex-shrink: 0; }
 
-.uikick-hero-media { padding: 24px 40px 0; }
-.uikick-hero-media .uikick-hero-video { margin-bottom: 24px; }
-
+.uikick-hero-pledge { width: 300px; flex-shrink: 0; }
+.uikick-hero-pledge-stats { display: flex; flex-direction: column; gap: 14px; margin: 16px 0 20px; }
+.uikick-hero-secondary-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 10px 0 16px; }
+.uikick-hero-secondary-row .uikick-remind-btn { flex: 1; justify-content: center; }
+.uikick-hero-share-row { display: flex; gap: 6px; flex-shrink: 0; }
+.uikick-hero-share-row button {
+    width: 30px; height: 30px; border: 1px solid #e5e7eb; border-radius: 4px; background: none;
+    font-size: 12px; color: #6b7280; cursor: pointer;
+}
+.uikick-hero-share-row button:hover { border-color: #9ca3af; color: #1f2937; }
+.uikick-all-or-nothing { font-size: 11px; color: #6b7280; line-height: 1.6; border-top: 1px solid #f3f4f6; padding-top: 12px; margin: 4px 0 0; }
+.uikick-all-or-nothing strong { color: #374151; text-decoration: underline; }
 
 .uikick-info-banner { background: #f9fafb; border-bottom: 1px solid #e5e7eb; padding: 16px 40px; }
 .uikick-info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
@@ -147,10 +142,6 @@
     display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
 }
 .uikick-info-item p { font-size: 12px; color: #4b5563; line-height: 1.6; margin: 0; }
-
-
-.uikick-sep { color: #6b7280; }
-.uikick-crumb { font-size: 13px; color: #d1d5db; text-decoration: underline; }
 
 .uikick-detail-body { padding: 24px 40px 64px; }
 .uikick-tabs-row {
@@ -168,7 +159,6 @@
 .uikick-toc-sidebar { width: 176px; flex-shrink: 0; }
 .uikick-toc-sidebar nav { position: sticky; top: 96px; display: flex; flex-direction: column; gap: 2px; }
 .uikick-toc-item { font-size: 12px; color: #6b7280; line-height: 1.4; padding: 6px 0; }
-
 .uikick-detail-main { flex: 1; min-width: 0; }
 .uikick-detail-side { width: 288px; flex-shrink: 0; position: sticky; top: 96px; }
 
@@ -208,7 +198,6 @@
 .uikick-hero-campaign-num { font-size: 34px; font-weight: 900; text-transform: uppercase; line-height: 1; margin-bottom: 8px; }
 .uikick-hero-total { color: #05ce78; font-weight: 600; font-size: 13px; }
 
-
 .uikick-story-text { font-size: 13px; color: #374151; line-height: 1.7; }
 .uikick-story-text p { margin: 0 0 20px; }
 
@@ -238,7 +227,7 @@
 .uikick-reward-limited { color: #f97316; font-weight: 500; }
 
 /* Right sidebar */
-.uikick-creator-card, .uikick-pledge-box, .uikick-support-box {
+.uikick-creator-card, .uikick-support-box {
     border: 1px solid #e5e7eb; border-radius: 2px; padding: 20px; margin-bottom: 16px;
 }
 .uikick-creator-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
@@ -254,12 +243,9 @@
 .uikick-link-btn:hover { text-decoration: underline; }
 
 .uikick-pledge-amount { font-size: 20px; font-weight: 700; color: #111827; margin-top: 12px; }
-.uikick-pledge-goal { font-size: 12px; color: #6b7280; margin: 2px 0 16px; }
-.uikick-pledge-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.uikick-pledge-goal { font-size: 12px; color: #6b7280; margin: 2px 0 0; }
 .uikick-pledge-stat-value { font-size: 16px; font-weight: 700; color: #111827; }
 .uikick-pledge-stat-label { font-size: 11px; color: #6b7280; }
-
-.uikick-pledge-actions { display: flex; flex-direction: column; }
 
 .uikick-support-box h3 { font-size: 13px; font-weight: 600; margin: 0 0 12px; }
 .uikick-support-noreward { display: block; margin-bottom: 16px; }
@@ -279,10 +265,26 @@
 }
 .uikick-share-icons button:hover { border-color: #9ca3af; color: #1f2937; }
 
+.uikick-filter-toggle {
+    display: none;
+    width: 100%; align-items: center; gap: 8px; margin: 16px 0 0; padding: 10px 14px;
+    border: 1px solid #d1d5db; border-radius: 6px; background: #fff;
+    font-size: 13px; font-weight: 600; color: #374151; cursor: pointer;
+}
+.uikick-filter-toggle-chevron { margin-left: auto; transition: transform .2s; }
+.uikick-filter-toggle.is-open .uikick-filter-toggle-chevron { transform: rotate(180deg); }
+
 @media (max-width: 900px) {
-    .uikick-body { flex-direction: column; }
-    .uikick-sidebar { width: 100%; min-height: auto; border-right: none; border-bottom: 1px solid #e5e7eb; }
+    .uikick-body { flex-direction: column; padding: 0 16px; }
+    .uikick-filter-toggle { display: flex; }
+    .uikick-sidebar {
+        width: 100%; min-height: auto; border-right: none; border-bottom: 1px solid #e5e7eb;
+        display: none; padding: 16px 0 24px;
+    }
+    .uikick-sidebar.is-open { display: block; }
     .uikick-detail-columns { flex-direction: column; }
-       .uikick-toc-sidebar { display: none; }
+    .uikick-toc-sidebar { display: none; }
     .uikick-detail-side { width: 100%; position: static; }
+    .uikick-hero-row { flex-direction: column; }
+    .uikick-hero-pledge { width: 100%; }
 }
