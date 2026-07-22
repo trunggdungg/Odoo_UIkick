@@ -59,7 +59,18 @@
         }, true);
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
+    function onReady(fn) {
+        // This bundle can load lazily, after DOMContentLoaded has already
+        // fired — listening for that event at that point would never call
+        // fn again. Run immediately if the DOM is already parsed.
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", fn);
+        } else {
+            fn();
+        }
+    }
+
+    onReady(function () {
         if (!document.querySelector(".uikick-grid")) return; // chỉ chạy trên trang home
         initCardVideos();
         initFilterForm();
