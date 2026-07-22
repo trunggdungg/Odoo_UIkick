@@ -27,9 +27,9 @@
     function initFilterForm() {
         var form = document.getElementById("uikick-filter-form");
         if (!form) return;
-        form.querySelectorAll("input[type=checkbox], input[type=radio]").forEach(function (input) {
-            input.addEventListener("change", function () { form.submit(); });
-        });
+        // Status/goal checkboxes & radios no longer auto-submit on every click —
+        // the user picks as many options as they want, then presses "Apply
+        // filters" (the form's own submit button) to reload with them all.
         var sortSelect = document.getElementById("uikick-sort-select");
         if (sortSelect) {
             sortSelect.addEventListener("change", function () { form.submit(); });
