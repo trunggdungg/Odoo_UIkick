@@ -63,17 +63,6 @@
         });
     }
 
-    function initRewardSelection() {
-        document.querySelectorAll(".uikick-reward-card .uikick-reward-select").forEach(function (btn) {
-            btn.addEventListener("click", function () {
-                document.querySelectorAll(".uikick-reward-card").forEach(function (card) {
-                    card.classList.remove("selected");
-                });
-                btn.closest(".uikick-reward-card").classList.add("selected");
-            });
-        });
-    }
-
     function onReady(fn) {
         // This bundle can load lazily, after DOMContentLoaded has already
         // fired — listening for that event at that point would never call
@@ -90,6 +79,5 @@
         initTabs();
         initHeroVideo();
         initRemindMe();
-        initRewardSelection();
     });
 })();

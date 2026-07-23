@@ -83,13 +83,6 @@
 .uikick-card-creator { font-size: 12px; color: #6b7280; margin: 4px 0 0; }
 .uikick-card-creator span { color: #374151; }
 
-.uikick-progress { margin-top: 12px; }
-.uikick-progress-track { height: 2px; background: #e5e7eb; border-radius: 999px; overflow: hidden; }
-.uikick-progress-fill { height: 100%; background: #05ce78; border-radius: 999px; transition: width .5s; }
-.uikick-progress-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
-.uikick-progress-pct { font-size: 12px; font-weight: 600; color: #111827; }
-.uikick-progress-days { font-size: 12px; color: #9ca3af; }
-
 .uikick-card-location { display: flex; align-items: center; gap: 4px; margin-top: 6px; color: #9ca3af; }
 .uikick-card-location span { font-size: 12px; }
 
@@ -230,14 +223,9 @@
 .uikick-reward-card { border: 1px solid #e5e7eb; border-radius: 2px; padding: 20px; transition: border-color .15s; }
 .uikick-reward-card:hover { border-color: #05ce78; }
 .uikick-reward-head { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; gap: 12px; }
-.uikick-reward-amount { font-size: 18px; font-weight: 700; color: #111827; }
 .uikick-reward-title { font-size: 13px; font-weight: 600; color: #1f2937; margin-top: 2px; }
-.uikick-reward-select { opacity: 0; transition: opacity .15s; }
-.uikick-reward-card:hover .uikick-reward-select { opacity: 1; }
-.uikick-reward-card.selected { border-color: #05ce78; background: #ecfdf5; }
 .uikick-reward-desc { font-size: 13px; color: #4b5563; margin: 0 0 12px; }
 .uikick-reward-meta { display: flex; align-items: center; gap: 12px; font-size: 11px; color: #9ca3af; }
-.uikick-reward-limited { color: #f97316; font-weight: 500; }
 
 /* Right sidebar */
 .uikick-creator-card, .uikick-support-box {

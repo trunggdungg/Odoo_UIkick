@@ -30,10 +30,9 @@ TOC_ITEMS = [
     "Tiết kiệm điện, tương thích cao", "Video demo", "Lộ trình ra mắt",
 ]
 
-SORT_OPTIONS = ["Relevance", "Most funded", "Most backed", "Newest", "End date"]
+SORT_OPTIONS = ["Relevance", "Most viewed", "Newest", "End date"]
 ORDER_BY_SORT = {
-    "Most funded": "percent_funded desc",
-    "Most backed": "backers desc",
+    "Most viewed": "views desc",
     "Newest": "create_date desc",
     "End date": "days_left asc",
 }
@@ -102,6 +101,8 @@ class UikickController(http.Controller):
         project = Project.search([('project_code', '=', project_id)], limit=1)
         if not project:
             project = Project.search([('project_code', '=', '5')], limit=1) or Project.search([], limit=1)
+        if project:
+            project.views += 1
         reward_tiers = request.env['uikick.reward.tier'].sudo().search([], order='sequence, id')
         values = {
             'project': project,
