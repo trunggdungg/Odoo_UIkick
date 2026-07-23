@@ -6,17 +6,14 @@
         var tabs = document.querySelectorAll(".uikick-tab");
         var contents = document.querySelectorAll(".uikick-tab-content");
         if (!tabs.length || !contents.length) return;
+
         tabs.forEach(function (tab) {
             tab.addEventListener("click", function (ev) {
                 ev.preventDefault();
                 var target = tab.getAttribute("data-tab");
 
-                tabs.forEach(function (t) {
-                    t.classList.remove("active");
-                });
+                tabs.forEach(function (t) { t.classList.remove("active"); });
                 tab.classList.add("active");
-                // TODO: nếu tách nội dung mỗi tab thành section riêng,
-                // ẩn/hiện tương ứng ở đây bằng data-tab attribute.
 
                 contents.forEach(function (content) {
                     content.classList.toggle("active", content.getAttribute("data-tab") === target);
@@ -54,7 +51,7 @@
             buttons.forEach(function (btn) {
                 btn.classList.toggle("is-reminded", reminded);
                 var label = btn.querySelector(".uikick-remind-label");
-                if (label) label.textContent = reminded ? "Reminded!" : "Remind me";
+                if (label) label.textContent = reminded ? "Đã quan tâm!" : "Để lại thông tin";
             });
         }
 
@@ -77,8 +74,18 @@
         });
     }
 
+    function onReady(fn) {
+        // This bundle can load lazily, after DOMContentLoaded has already
+        // fired — listening for that event at that point would never call
+        // fn again. Run immediately if the DOM is already parsed.
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", fn);
+        } else {
+            fn();
+        }
+    }
 
-    document.addEventListener("DOMContentLoaded", function () {
+    onReady(function () {
         if (!document.querySelector(".uikick-detail")) return; // chỉ chạy trên trang detail
         initTabs();
         initHeroVideo();

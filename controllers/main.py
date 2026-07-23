@@ -5,17 +5,29 @@ from odoo.http import request
 CATEGORIES = [
     "Art", "Comics", "Crafts", "Dance", "Design", "Fashion",
     "Film & Video", "Food", "Games", "Journalism", "Music",
-    "Photography", "Publishing", "Technology", "Theater",
+    "Photography", "Publishing", "Technology", "Theater","Camera Equipment",
 ]
 
+# Internal ids used for data-tab matching/JS — the visible label is translated
+# separately via TAB_LABELS so the tab-switching logic doesn't have to compare
+# against Vietnamese strings.
 TABS = ["Campaign", "Rewards", "Creator", "FAQ", "Updates", "Comments", "Community"]
+TAB_LABELS = {
+    "Campaign": "Giới thiệu",
+    "Rewards": "Tính năng",
+    "Creator": "Tác giả",
+    "FAQ": "FAQ",
+    "Updates": "Cập nhật",
+    "Comments": "Bình luận",
+    "Community": "Cộng đồng",
+}
 
 TOC_ITEMS = [
-    "Base Campaign Overview", "Design From Knowledge", "Benefiting: Portability",
-    "3rd Gen. Cooling", "Larger Air Intake", "5 Mode Fan Control",
-    "Ultimate Choices for Every Device", "4 Brains, Smarter Control",
-    "Max 8TB, Swappable SSD", "100Gbps, Transfer Speed",
-    "Low Power, High Compatibility", "Demo Test Video", "Timeline",
+    "Tổng quan sản phẩm", "Thiết kế dựa trên tri thức", "Lợi ích: Tính di động",
+    "Tản nhiệt thế hệ 3", "Cửa hút gió lớn hơn", "Điều khiển quạt 5 chế độ",
+    "Lựa chọn hoàn hảo cho mọi thiết bị", "4 bộ xử lý, điều khiển thông minh hơn",
+    "SSD tháo rời tối đa 8TB", "Tốc độ truyền tải 100Gbps",
+    "Tiết kiệm điện, tương thích cao", "Video demo", "Lộ trình ra mắt",
 ]
 
 SORT_OPTIONS = ["Relevance", "Most funded", "Most backed", "Newest", "End date"]
@@ -32,11 +44,22 @@ class UikickController(http.Controller):
                 type='http', auth='public', website=True, sitemap=True)
     def home(self, category=None, **kw):
         Project = request.env['uikick.project'].sudo()
-        requested_category = category or "Technology"
 
-        # fall back to the full catalog if the requested category has no projects
-        domain = [('category', '=', requested_category)]
-        if not Project.search_count(domain):
+        query_categories = [c for c in request.httprequest.args.getlist('category') if c in CATEGORIES]
+        categories_submitted = 'categories_submitted' in request.httprequest.args
+
+        if categories_submitted:
+            # the sidebar's checkbox form was submitted — trust it as-is,
+            # including an empty selection meaning "show every category"
+            selected_categories = query_categories
+        elif category:
+            selected_categories = [category]
+        else:
+            selected_categories = ["Technology"]
+
+        domain = [('category', 'in', selected_categories)] if selected_categories else []
+        if domain and not Project.search_count(domain):
+            # none of the selected categories have any projects – show everything instead
             domain = []
 
         statuses = [s for s in request.httprequest.args.getlist('status') if s in ('live', 'upcoming')]
@@ -51,12 +74,20 @@ class UikickController(http.Controller):
         order = ORDER_BY_SORT.get(sort, 'sequence asc, id asc')
         projects = Project.search(domain, order=order)
 
+        if not selected_categories:
+            header_label = 'All Projects'
+        elif len(selected_categories) == 1:
+            header_label = selected_categories[0]
+        else:
+            header_label = str(len(selected_categories)) + ' Categories'
+
         values = {
             'categories': CATEGORIES,
-            'active_category': requested_category,
+            'header_label': header_label,
             'projects': projects,
             'sort_options': SORT_OPTIONS,
             'filters': {
+                'categories': selected_categories,
                 'status': statuses,
                 'location': location,
                 'sort': sort,
@@ -75,6 +106,7 @@ class UikickController(http.Controller):
         values = {
             'project': project,
             'tabs': TABS,
+            'tab_labels': TAB_LABELS,
             'toc_items': TOC_ITEMS,
             'reward_tiers': reward_tiers,
         }

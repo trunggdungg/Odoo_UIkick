@@ -27,51 +27,31 @@
     function initFilterForm() {
         var form = document.getElementById("uikick-filter-form");
         if (!form) return;
-        // form.querySelectorAll("input[type=checkbox], input[type=radio]").forEach(function (input) {
-        //     input.addEventListener("change", function () {
-        //         form.submit();
-        //     });
-        // });
+        // Status/goal checkboxes & radios no longer auto-submit on every click —
+        // the user picks as many options as they want, then presses "Apply
+        // filters" (the form's own submit button) to reload with them all.
         var sortSelect = document.getElementById("uikick-sort-select");
         if (sortSelect) {
-            sortSelect.addEventListener("change", function () {
-                form.submit();
-            });
+            sortSelect.addEventListener("change", function () { form.submit(); });
         }
     }
 
-    function preserveFiltersOnCategoryLinks() {
-        var query = window.location.search;
-        if (!query) return;
-        document.querySelectorAll(".uikick-cat-item").forEach(function (link) {
-            link.href = link.getAttribute("href") + query;
-        });
-    }
-
     function initMobileFilterToggle() {
-        // Event delegation on document: some Odoo frontend/editor scripts can
-        // rebuild the button node after our own DOMContentLoaded handler runs,
-        // which would silently drop a listener bound directly to that node.
+        // Capture phase + delegation: this Odoo build has several other
+        // document-level click listeners registered with useCapture:true that
+        // can stop propagation before a normal (bubble-phase) listener ever
+        // sees the click, so bind ours in the capture phase too.
         document.addEventListener("click", function (ev) {
             var toggle = ev.target.closest("#uikick-filter-toggle");
             if (!toggle) return;
-            console.log("Bắt được click vào nút Filter by", toggle);
             var sidebar = document.getElementById("uikick-filter-form");
-            if (!sidebar) {
-                console.log("Không tìm thấy #uikick-filter-form");
-                return;
-            }
+            if (!sidebar) return;
             var isOpen = sidebar.classList.toggle("is-open");
             toggle.classList.toggle("is-open", isOpen);
-            console.log("sidebar class sau khi toggle:", sidebar.className);
         }, true);
     }
 
-    document.getElementById("uikick-filter-toggle").addEventListener("click", function () {
-        console.log("xin chào");
-    });
-
-      function onReady(fn) {
+    function onReady(fn) {
         // This bundle can load lazily, after DOMContentLoaded has already
         // fired — listening for that event at that point would never call
         // fn again. Run immediately if the DOM is already parsed.
@@ -86,7 +66,6 @@
         if (!document.querySelector(".uikick-grid")) return; // chỉ chạy trên trang home
         initCardVideos();
         initFilterForm();
-        preserveFiltersOnCategoryLinks();
         initMobileFilterToggle();
     });
 })();
