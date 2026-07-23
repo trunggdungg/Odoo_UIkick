@@ -43,22 +43,22 @@
     }
 
     function initRemindMe() {
+        // These buttons are labelled "Để lại thông tin" (leave your info) — they
+        // should jump to the actual lead capture form under the Campaign tab,
+        // not fake a completed/toggled state with no info ever submitted.
         var buttons = document.querySelectorAll(".uikick-remind-btn");
         if (!buttons.length) return;
-        var reminded = false;
-
-        function render() {
-            buttons.forEach(function (btn) {
-                btn.classList.toggle("is-reminded", reminded);
-                var label = btn.querySelector(".uikick-remind-label");
-                if (label) label.textContent = reminded ? "Đã quan tâm!" : "Để lại thông tin";
-            });
-        }
 
         buttons.forEach(function (btn) {
             btn.addEventListener("click", function () {
-                reminded = !reminded;
-                render();
+                var campaignTab = document.querySelector('.uikick-tab[data-tab="Campaign"]');
+                if (campaignTab) campaignTab.click();
+
+                var form = document.querySelector(".uikick-lead-form");
+                if (!form) return;
+                form.scrollIntoView({ behavior: "smooth", block: "start" });
+                var firstField = form.querySelector("input, textarea");
+                if (firstField) firstField.focus({ preventScroll: true });
             });
         });
     }

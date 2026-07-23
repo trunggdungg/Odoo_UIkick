@@ -23,11 +23,6 @@
 
 .uikick-link-btn { font-size: 13px; font-weight: 500; }
 
-.uikick-remind-btn.is-reminded {
-    border-color: var(--bs-primary, #05ce78); color: var(--bs-primary, #05ce78);
-    background: var(--bs-primary-bg-subtle, #ecfdf5);
-}
-
 /* ==== Body layout ==== */
 .uikick-body { display: flex; max-width: 1320px; margin: 0 auto; padding: 0 32px; }
 .uikick-sidebar {
