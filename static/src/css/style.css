@@ -85,6 +85,48 @@
 .uikick-card-location { display: flex; align-items: center; gap: 4px; margin-top: 6px; color: var(--bs-secondary-color, #9ca3af); }
 .uikick-card-location span { font-size: 12px; }
 
+/* ==== Landing page (/uikick) ==== */
+.uikick-landing-hero { background: var(--bs-dark, #111827); color: var(--bs-white, #fff); padding: 64px 40px; text-align: center; }
+.uikick-landing-hero-inner { max-width: 720px; }
+.uikick-landing-hero-eyebrow {
+    font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--bs-primary, #05ce78); margin: 0 0 12px;
+}
+.uikick-landing-hero-title { font-size: 32px; font-weight: 800; line-height: 1.25; margin: 0 0 24px; }
+
+.uikick-landing-section { padding: 48px 40px; }
+.uikick-landing-label {
+    font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+    color: var(--bs-secondary-color, #6b7280); margin: 0 0 16px;
+}
+
+.uikick-landing-split { display: flex; gap: 40px; align-items: flex-start; }
+.uikick-landing-featured { flex: 1.2; min-width: 0; }
+.uikick-landing-recommended { flex: 1; min-width: 0; }
+.uikick-landing-featured .uikick-card-media { aspect-ratio: 16/8; }
+.uikick-landing-featured .uikick-card-title { font-size: 20px; -webkit-line-clamp: 3; }
+.uikick-landing-recommended-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 24px 20px; }
+
+.uikick-landing-stats {
+    background: var(--bs-tertiary-bg, #f9fafb); border-top: 1px solid var(--bs-border-color, #e5e7eb);
+    border-bottom: 1px solid var(--bs-border-color, #e5e7eb); padding: 32px 40px;
+}
+.uikick-landing-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; text-align: center; }
+.uikick-landing-stat strong { display: block; font-size: 26px; font-weight: 800; color: var(--bs-dark, #111827); }
+.uikick-landing-stat span { font-size: 12px; color: var(--bs-secondary-color, #6b7280); }
+
+.uikick-landing-categories { display: flex; flex-wrap: wrap; gap: 12px; }
+.uikick-category-tile {
+    display: flex; flex-direction: column; gap: 4px; padding: 14px 18px;
+    border: 1px solid var(--bs-border-color, #e5e7eb); border-radius: 8px; min-width: 140px;
+    transition: border-color .15s;
+}
+.uikick-category-tile:hover { border-color: var(--bs-primary, #05ce78); }
+.uikick-category-tile-name { font-size: 13px; font-weight: 600; color: var(--bs-dark, #111827); }
+.uikick-category-tile-count { font-size: 11px; color: var(--bs-secondary-color, #9ca3af); }
+
+.uikick-landing-cta { text-align: center; padding: 0 40px 56px; }
+
 /* ==== Detail page ==== */
 .uikick-container { max-width: 1152px; margin: 0 auto; }
 .uikick-breadcrumb { padding: 16px 40px 0; font-size: 12px; color: var(--bs-secondary-color, #9ca3af); }
@@ -273,4 +315,11 @@
     .uikick-hero-video-col { flex: none; }
     .uikick-hero-video { flex: none; min-height: 0; aspect-ratio: 16/9; }
     .uikick-hero-pledge { width: 100%; }
+
+    .uikick-landing-hero { padding: 40px 20px; }
+    .uikick-landing-section { padding: 32px 20px; }
+    .uikick-landing-split { flex-direction: column; }
+    .uikick-landing-stats { padding: 24px 20px; }
+    .uikick-landing-stats-grid { grid-template-columns: 1fr; gap: 16px; }
+    .uikick-landing-cta { padding: 0 20px 40px; }
 }

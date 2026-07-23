@@ -63,7 +63,7 @@
     }
 
     onReady(function () {
-        if (!document.querySelector(".uikick-grid")) return; // chỉ chạy trên trang home
+        if (!document.querySelector(".uikick-card")) return; // chỉ chạy trên trang có project card (discover/landing)
         initCardVideos();
         initFilterForm();
         initMobileFilterToggle();

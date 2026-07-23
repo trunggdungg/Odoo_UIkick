@@ -39,9 +39,41 @@ ORDER_BY_SORT = {
 
 class UikickController(http.Controller):
 
-    @http.route(['/uikick', '/uikick/category/<string:category>'],
+    @http.route(['/uikick'], type='http', auth='public', website=True, sitemap=True)
+    def landing(self, **kw):
+        Project = request.env['uikick.project'].sudo()
+
+        featured_project = Project.search([], order='percent_funded desc, id asc', limit=1)
+        recommended_domain = [('id', '!=', featured_project.id)] if featured_project else []
+        recommended_projects = Project.search(recommended_domain, order='views desc, id asc', limit=4)
+
+        category_groups = Project.read_group([], ['category'], ['category'])
+        category_counts = sorted(
+            (
+                {'name': g['category'], 'count': g.get('category_count', g.get('__count', 0))}
+                for g in category_groups if g['category']
+            ),
+            key=lambda c: c['count'], reverse=True,
+        )
+
+        all_projects = Project.search([])
+        stats = {
+            'project_count': len(all_projects),
+            'backers_total': sum(all_projects.mapped('backers')),
+            'raised_total': sum(all_projects.mapped('amount_raised')),
+        }
+
+        values = {
+            'featured_project': featured_project,
+            'recommended_projects': recommended_projects,
+            'category_counts': category_counts,
+            'stats': stats,
+        }
+        return request.render('odoo_uikick.landing_page', values)
+
+    @http.route(['/uikick/discover', '/uikick/discover/category/<string:category>'],
                 type='http', auth='public', website=True, sitemap=True)
-    def home(self, category=None, **kw):
+    def discover(self, category=None, **kw):
         Project = request.env['uikick.project'].sudo()
 
         query_categories = [c for c in request.httprequest.args.getlist('category') if c in CATEGORIES]
@@ -92,7 +124,7 @@ class UikickController(http.Controller):
                 'sort': sort,
             },
         }
-        return request.render('odoo_uikick.home_page', values)
+        return request.render('odoo_uikick.discover_page', values)
 
     @http.route(['/uikick/project/<string:project_id>'],
                 type='http', auth='public', website=True, sitemap=False)
