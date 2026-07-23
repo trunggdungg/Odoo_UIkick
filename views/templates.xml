@@ -126,28 +126,6 @@
                                         <h3 class="uikick-card-title"><t t-esc="project.title"/></h3>
                                         <p class="uikick-card-creator">by <span><t t-esc="project.creator"/></span></p>
 
-                                        <div class="uikick-progress">
-                                            <div class="uikick-progress-track">
-                                                <div class="uikick-progress-fill"
-                                                     t-attf-style="width: {{ min(project.percent_funded or 0, 100) }}%;"/>
-                                            </div>
-                                            <div class="uikick-progress-meta">
-                                                <span class="uikick-progress-pct">
-                                                    <t t-if="project.percent_funded &gt;= 100">
-                                                        <t t-esc="project.percent_funded"/>% funded
-                                                    </t>
-                                                    <t t-else="">
-                                                        <t t-esc="project.percent_funded"/>% of goal
-                                                    </t>
-                                                </span>
-                                                <span class="uikick-progress-days">
-                                                    <t t-if="project.days_left &gt; 0">
-                                                        <t t-esc="project.days_left"/> days left
-                                                    </t>
-                                                    <t t-else="">Ended</t>
-                                                </span>
-                                            </div>
-                                        </div>
 
                                         <div class="uikick-card-location">
                                             <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
@@ -219,7 +197,7 @@
                                         </div>
                                     </t>
                                     <div class="uikick-hero-total">
-                                        <t t-esc="'{:,}'.format(project.backers).replace(',', '.')"/> người đã quan tâm sản phẩm này.
+                                         <t t-esc="'{:,}'.format(project.views or 0).replace(',', '.')"/> lượt xem bài đăng này.
                                     </div>
                                 </div>
                             </div>
@@ -250,11 +228,12 @@
                             <div class="uikick-interest-accent"/>
                             <div class="uikick-interest-count">
                                 <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+                                   <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                 </svg>
-                                <span><t t-esc="'{:,}'.format(project.backers).replace(',', '.')"/></span>
+                                <span><t t-esc="'{:,}'.format(project.views or 0).replace(',', '.')"/></span>
                             </div>
-                            <p class="uikick-interest-label">người đã quan tâm sản phẩm</p>
+                              <p class="uikick-interest-label">lượt xem bài đăng</p>
 
                             <div class="uikick-hero-meta-group">
                                 <h4>Danh mục</h4>
@@ -364,8 +343,8 @@
                                         hiện đại — đơn giản, mạnh mẽ và đẹp mắt.
                                     </p>
                                     <p>
-                                        Với hơn <t t-esc="'{:,}'.format(project.backers).replace(',', '.')"/> người đã quan tâm
-                                        trên toàn thế giới, đây là minh chứng cho sức hút của một sản phẩm được thiết kế thực sự
+                                        Với hơn <t t-esc="'{:,}'.format(project.views or 0).replace(',', '.')"/> lượt xem
+                                        từ khắp nơi trên thế giới, đây là minh chứng cho sức hút của một sản phẩm được thiết kế thực sự
                                         lấy người dùng làm trung tâm.
                                     </p>
 
@@ -390,8 +369,8 @@
                                     </p>
 
                                     <div class="uikick-milestone-box">
-                                        <div class="uikick-milestone-pct"><t t-esc="'{:,}'.format(project.backers).replace(',', '.')"/> NGƯỜI QUAN TÂM</div>
-                                        <div class="uikick-milestone-meta">Hãy là người tiếp theo — để lại thông tin bên dưới.</div>
+                                          <div class="uikick-milestone-pct"><t t-esc="'{:,}'.format(project.views or 0).replace(',', '.')"/> LƯỢT XEM</div>
+                                        <div class="uikick-milestone-meta">Cảm ơn bạn đã ghé xem — để lại thông tin bên dưới nếu bạn quan tâm.</div>
                                     </div>
 
                                     <p>
@@ -437,22 +416,10 @@
                                     <t t-foreach="reward_tiers" t-as="tier">
                                         <div class="uikick-reward-card">
                                             <div class="uikick-reward-head">
-                                                <div>
-                                                    <div class="uikick-reward-amount">US$<t t-esc="tier.amount"/></div>
-                                                    <div class="uikick-reward-title"><t t-esc="tier.title"/></div>
-                                                </div>
-                                                <button class="uikick-btn-primary uikick-reward-select">Chọn</button>
+                                                  <div class="uikick-reward-title"><t t-esc="tier.title"/></div>
                                             </div>
                                             <p class="uikick-reward-desc"><t t-esc="tier.description"/></p>
-                                            <div class="uikick-reward-meta">
-                                                <span>Dự kiến giao hàng: <t t-esc="tier.estimated"/></span>
-                                                <span>•</span>
-                                                <span><t t-esc="tier.backers"/> người quan tâm</span>
-                                                <t t-if="tier.limited">
-                                                    <span>•</span>
-                                                    <span class="uikick-reward-limited">Chỉ còn <t t-esc="tier.remaining"/>!</span>
-                                                </t>
-                                            </div>
+                                            <div class="uikick-reward-meta">    <span>Dự kiến hoàn thiện: <t t-esc="tier.estimated"/></span>                                            </div>
                                         </div>
                                     </t>
                                 </div>

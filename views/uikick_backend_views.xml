@@ -14,6 +14,7 @@
                 <field name="title"/>
                 <field name="category"/>
                 <field name="status"/>
+                       <field name="views"/>
                 <field name="amount_raised"/>
                 <field name="goal"/>
                 <field name="backers"/>
@@ -43,6 +44,7 @@
                             <field name="active"/>
                         </group>
                         <group>
+                                   <field name="views"/>
                             <field name="goal"/>
                             <field name="amount_raised"/>
                             <field name="percent_funded"/>

@@ -21,6 +21,7 @@ class UikickProject(models.Model):
     amount_raised = fields.Integer(string='Amount Raised (US$)')
     backers = fields.Integer(string='Backers')
     goal = fields.Integer(string='Goal (US$)')
+    views = fields.Integer(string='View Count', default=0)
     image = fields.Char(string='Image URL')
     video_url = fields.Char(string='Video URL')
     description = fields.Text(string='Description')
