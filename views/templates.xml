@@ -197,7 +197,9 @@
                                         </div>
                                     </t>
                                     <div class="uikick-hero-total">
-                                         <t t-esc="'{:,}'.format(project.views or 0).replace(',', '.')"/> lượt xem bài đăng này.
+                                        <t t-if="project.status == 'ended'">Dự án đã hoàn thành.</t>
+                                        <t t-elif="project.status == 'upcoming'">Sắp ra mắt — hãy đón chờ.</t>
+                                        <t t-else="">Đang được giới thiệu tới cộng đồng.</t>
                                     </div>
                                 </div>
                             </div>
@@ -228,12 +230,15 @@
                             <div class="uikick-interest-accent"/>
                             <div class="uikick-interest-count">
                                 <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                                   <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/>
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
-                                <span><t t-esc="'{:,}'.format(project.views or 0).replace(',', '.')"/></span>
+                   <span>
+                                    <t t-if="project.status == 'ended'">Đã hoàn thành</t>
+                                    <t t-elif="project.status == 'upcoming'">Sắp ra mắt</t>
+                                    <t t-else="">Đang triển khai</t>
+                                </span>
                             </div>
-                              <p class="uikick-interest-label">lượt xem bài đăng</p>
+                         <p class="uikick-interest-label">Trạng thái dự án</p>
 
                             <div class="uikick-hero-meta-group">
                                 <h4>Danh mục</h4>
@@ -343,9 +348,8 @@
                                         hiện đại — đơn giản, mạnh mẽ và đẹp mắt.
                                     </p>
                                     <p>
-                                        Với hơn <t t-esc="'{:,}'.format(project.views or 0).replace(',', '.')"/> lượt xem
-                                        từ khắp nơi trên thế giới, đây là minh chứng cho sức hút của một sản phẩm được thiết kế thực sự
-                                        lấy người dùng làm trung tâm.
+                                            Là một sản phẩm thuộc lĩnh vực <strong><t t-esc="project.category"/></strong>, đây tiếp tục
+                                        là minh chứng cho cam kết mang đến trải nghiệm người dùng thực sự chất lượng.
                                     </p>
 
                                     <div class="uikick-feature-box">
@@ -369,8 +373,8 @@
                                     </p>
 
                                     <div class="uikick-milestone-box">
-                                          <div class="uikick-milestone-pct"><t t-esc="'{:,}'.format(project.views or 0).replace(',', '.')"/> LƯỢT XEM</div>
-                                        <div class="uikick-milestone-meta">Cảm ơn bạn đã ghé xem — để lại thông tin bên dưới nếu bạn quan tâm.</div>
+                                         <div class="uikick-milestone-pct"><t t-esc="(project.category or '').upper()"/></div>
+                                        <div class="uikick-milestone-meta">Một sản phẩm tiêu biểu đến từ <t t-esc="project.location"/>.</div>
                                     </div>
 
                                     <p>
